@@ -1,0 +1,17 @@
+---
+title: "Making decisions and inferential statements based on data plots"
+author: "Dianne Cook"
+format: revealjs
+---
+
+## What is your plot testing? Determining the hypothesis based on the type of plot
+
+Stuff
+
+## Creating null samples to build lineups for comparison and testing
+
+Stuff
+
+## Conducting a lineup test
+
+Stuff

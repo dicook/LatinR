@@ -1,0 +1,25 @@
+/*-- scss:defaults --*/
+$body-font-size: 1.2rem !default;
+$headings-font-weight:  500 !default;
+$font-size-base: 1.2rem;
+
+/*-- scss:rules --*/
+h1, h2, h3, h4, h5, h6 {
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, .3);
+}
+
+/*-- scss:rules --*/
+.textbox {
+  margin: 1em 0;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+.textbox-container {
+  padding-top: 5px;
+  padding-left: 10px;
+  color: black;
+  background-color: white;
+  border-bottom-right-radius: 10px;
+}
