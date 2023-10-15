@@ -1,17 +1,669 @@
 ---
-title: "Making decisions and inferential statements based on data plots"
-author: "Dianne Cook"
-format: revealjs
+title: "Creating data plots for effective decision-making using statistical inference with R"
+author: "Dianne Cook <br> Monash University"
+format:
+  revealjs: 
+    theme: 
+      - default
+      - custom.scss
+    slide-number: c/t
+    slide-tone: true
+    chalkboard: true
+code-line-numbers: false
+message: false
+highlight-style: pygments
 ---
 
-## What is your plot testing? Determining the hypothesis based on the type of plot
+```{r, include = FALSE}
+library(tidyverse)
+library(colorspace)
+library(patchwork)
+library(broom)
+library(DT)
+library(palmerpenguins)
+library(nullabor)
 
-Stuff
+options(width = 200)
+knitr::opts_chunk$set(
+  fig.width = 3,
+  fig.height = 3,
+  fig.align = "center",
+  dev.args = list(bg = 'transparent'),
+  out.width = "100%",
+  fig.retina = 3,
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  cache = FALSE
+)
+theme_set(ggthemes::theme_gdocs(base_size = 12) +
+  theme(plot.background = 
+        element_rect(fill = 'transparent', colour = NA),
+        axis.line.x = element_line(color = "black", 
+                                   linetype = "solid"),
+        axis.line.y = element_line(color = "black", 
+                                   linetype = "solid"),
+        plot.title.position = "plot",
+        plot.title = element_text(size = 18),
+        panel.background  = 
+          element_rect(fill = 'transparent', colour = "black"),
+        legend.background = 
+          element_rect(fill = 'transparent', colour = NA),
+        legend.key        = 
+          element_rect(fill = 'transparent', colour = NA)
+  ) 
+)
+```
 
-## Creating null samples to build lineups for comparison and testing
+```{r}
+#| echo: false
+#| eval: false
+# divergingx_hcl(palette="Zissou 1", n=10)
+# [1] "#3B99B1" "#40ABA5" "#6FB798" "#9FC095" "#C7C98A"
+# [6] "#EABE23" "#E8A419" "#E78802" "#EA6400" "#F5191C"
+# specplot(divergingx_hcl(palette="Zissou 1", n=10))
+```
 
-Stuff
+## Session 2: Making decisions and inferential statements based on data plots {.center .center-align}
 
-## Conducting a lineup test
+## Outline
 
-Stuff
+```{r}
+plan <- tribble(~time, ~topic,
+                "3:30-3:50", "What is your plot testing?",
+                "3:50-4:10", "Creating null samples",
+                "4:10-4:30", "Conducting a lineup test", 
+                "4:30-5:00", "Testing for best plot design")
+knitr::kable(plan)
+```
+
+## What is your plot testing? 
+
+:::: {.columns}
+
+::: {.column width=50%}
+
+<br>
+
+```{r}
+#| eval: false
+#| echo: true
+LM_FIT <- lm(VAR2 ~ VAR1, 
+             data = DATA)
+FIT_ALL <- augment(LM_FIT)
+ggplot(FIT_ALL, aes(x=.FITTED, 
+                    y=.RESID)) + 
+  geom_point()
+```
+
+<br>
+What will we  be assessing using this plot?
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=40%}
+
+::: {.fragment}
+Is the model misspecified? 
+
+- non-linearity
+- heteroskedasticity
+- outliers/anomalies
+- non-normality
+- fitted value distribution
+:::
+
+:::
+
+::::
+
+
+## What is your plot testing? 
+
+:::: {.columns}
+
+::: {.column width=60%}
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+cars_lm <- lm(dist ~ speed, data = cars)
+cars_all <- augment(cars_lm)
+ggplot(cars_all, aes(x=.fitted, y=.resid)) + geom_point()
+```
+
+:::
+
+::: {.column width=40%}
+
+What do you see?
+
+::: {.fragment}
+&cross; non-linearity <br>
+&check; heteroskedasticity <br>
+&cross; outliers/anomalies <br>
+&cross; non-normality <br>
+&check; fitted value distribution is uniform
+:::
+
+::: {.fragment}
+<br>
+<span style="color: #F5191C;"> Are you sure? </span>
+:::
+
+:::
+
+::::
+
+
+## What is your plot testing? 
+
+:::: {.columns}
+
+::: {.column width=50%}
+
+<br>
+
+```{r}
+#| eval: false
+#| echo: true
+ggplot(DATA, 
+       aes(x=VAR1, 
+           y=VAR2, 
+           color=CLASS)) + 
+  geom_point() 
+```
+
+<br>
+What will we  be assessing using this plot?
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=40%}
+
+::: {.fragment}
+<br>
+Is there a difference between the groups?
+
+- location
+- shape
+- outliers/anomalies
+:::
+
+:::
+
+::::
+
+## What is your plot testing? 
+
+:::: {.columns}
+
+::: {.column width=50%}
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4.5
+ggplot(penguins, 
+       aes(x=flipper_length_mm, 
+           y=bill_length_mm, 
+           color=species)) + 
+  geom_point(alpha=0.8) +
+  scale_color_discrete_divergingx(palette="Zissou 1") +
+  theme(legend.title = element_blank(), 
+        legend.position = "bottom",
+        legend.direction = "horizontal",
+        legend.text = element_text(size="8"))
+```
+
+<br>
+
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=40%}
+
+What do you see?
+
+::: {.fragment}
+There a difference between the groups
+
+&check; location <br>
+&cross; shape <br>
+&check; outliers/anomalies
+:::
+
+::: {.fragment}
+<br>
+<span style="color: #F5191C;"> Are you sure? </span>
+:::
+:::
+
+::::
+
+## Statistical thinking
+
+- Because the <span style="color: #3B99B1;"> plot </span> is specified using a functional mapping of the variables, it <span style="color: #3B99B1;"> is a statistic</span>. 
+- Applying the function to a dataset provides the observed value.
+- The null and alternative hypotheses are indicated from the plot description.
+
+## Null hypothesis, example 1
+
+:::: {.columns}
+
+::: {.column width=50%}
+
+<br>
+
+```{r}
+#| eval: false
+#| echo: true
+LM_FIT <- lm(VAR2 ~ VAR1, 
+             data = DATA)
+FIT_ALL <- augment(LM_FIT)
+ggplot(FIT_ALL, aes(x=.FITTED, 
+                    y=.RESID)) + 
+  geom_point()
+```
+
+<br>
+What is the null hypothesis?
+
+::: {.fragment}
+*There is no relationship between residuals and fitted values.* This is $H_o$.
+:::
+
+:::
+
+::: {.column width=5%}
+:::
+
+::: {.column width=45%}
+
+
+::: {.fragment .f80}
+<br><br><br>
+
+**Alternative hypothesis**, $H_a$:
+
+*There is some relationship*, which might be
+
+- non-linearity
+- heteroskedasticity
+- outliers/anomalies
+:::
+
+:::
+
+::::
+
+## Null hypothesis, example 2
+
+:::: {.columns}
+
+::: {.column width=50%}
+
+<br>
+
+```{r}
+#| eval: false
+#| echo: true
+ggplot(DATA, 
+       aes(x=VAR1, 
+           y=VAR2, 
+           color=CLASS)) + 
+  geom_point()
+```
+
+<br>
+What is the null hypothesis?
+
+::: {.fragment}
+*There is no difference between the classes.* This is $H_o$.
+:::
+
+:::
+
+::: {.column width=5%}
+:::
+
+::: {.column width=45%}
+
+
+::: {.fragment .f80}
+<br><br><br>
+**Alternative hypothesis**, $H_a$:
+
+*There is some difference between the classes*, which might be
+
+- location
+- shape
+- outliers/anomalies
+:::
+
+:::
+
+::::
+
+## YOUR TURN
+
+What is being tested in each of these plot descriptions?
+
+:::: {.columns}
+
+::: {.column width=30% .fragment}
+```{r}
+#| eval: false
+#| echo: true
+ggplot(DATA, 
+       aes(x=VAR1)) +
+  geom_histogram()
+```
+:::
+
+::: {.column width=38% .fragment}
+```{r}
+#| eval: false
+#| echo: true
+ggplot(DATA, 
+       aes(x=VAR1, 
+           fill=VAR2)) +
+  geom_bar(position="fill")
+```
+:::
+
+::: {.column width=30% .fragment}
+```{r}
+#| eval: false
+#| echo: true
+ggplot(DATA, 
+       aes(x=VAR1, 
+           y=VAR2)) +
+  geom_point() +
+  geom_smooth()
+```
+:::
+
+::: {.column width=30% .fragment}
+Distribution of VAR1 is ?
+:::
+
+::: {.column width=38% .fragment}
+There is no relationship between VAR1 and VAR2. More specifically, the proportion of VAR2 in each level of VAR1 is the same.
+:::
+
+::: {.column width=30% .fragment .f80}
+<br>
+There is no relationship between VAR1 and VAR2. Particularly, VAR2 is not dependent on VAR1 and there is no trend.</span>
+:::
+
+::::
+
+## Creating null samples {.center}
+
+## Statistical thinking
+
+:::: {.columns}
+::: {.column width=50% .f80}
+
+Sampling distribution for a t-statistic. Values expected assuming $H_o$ is true. <span style="color: #F5191C;"> Shaded areas </span> indicate extreme values. 
+
+```{r}
+#| fig-width: 3
+#| fig-height: 2.6
+#| out-width: 70%
+t_df <- tibble(x=seq(-4, 4, 0.1), y=dt(x, df=5))
+t_cr1 <- tibble(x=c(-4, seq(-4, -2.57, 0.05), -2.57), 
+                y=c(0, dt(x[-c(1,31)], df=5), 0))
+t_cr2 <- tibble(x=c(2.57, seq(2.57, 4, 0.05), 4), 
+                y=c(0, dt(x[-c(1,31)], df=5), 0))
+ggplot() + 
+  geom_hline(yintercept = 0) +
+  geom_line(data=t_df, aes(x=x, y=y)) +
+  geom_polygon(data=t_cr1, aes(x=x, y=y), fill="#F5191C", alpha=0.8) +
+  geom_polygon(data=t_cr2, aes(x=x, y=y), fill="#F5191C", alpha=0.8) +
+  theme(axis.title = element_blank(),
+        axis.text = element_blank(),
+        panel.grid.major = element_blank())
+
+```
+
+:::
+
+::: {.column width=50% .fragment}
+<br><br><br><br>
+
+<span style="color: #3B99B1;"> For making comparisons when plotting, draw a number of null samples, and plot them with the same script in the plot description.</span>
+
+:::
+
+::::
+
+
+## Creating null samples, example 1
+
+:::: {.columns}
+::: {.column width=50% .f80}
+
+```{r}
+#| eval: false
+#| echo: true
+ggplot(DATA, 
+       aes(x=VAR1, 
+           y=VAR2, 
+           color=CLASS)) + 
+  geom_point()
+```
+
+<br>
+What is the null hypothesis?
+
+::: {.fragment}
+*There is no difference between the classes.* This is $H_o$.
+:::
+
+
+::: {.fragment}
+<br>
+Break any association by permuting (scrambling/shuffling/re-sampling) the CLASS variable.
+:::
+
+:::
+::: {.column width=50%}
+
+::: {.fragment}
+```{r}
+#| fig-width: 4
+#| fig-height: 8
+#| out-width: 60%
+p1 <- ggplot(penguins, 
+       aes(x=flipper_length_mm, 
+           y=bill_length_mm, 
+           color=species)) + 
+  geom_point(alpha=0.8) +
+  scale_color_discrete_divergingx(palette="Zissou 1") +
+  ggtitle("Original") +
+  theme(legend.position = "none")
+set.seed(235)
+p2 <- ggplot(penguins, 
+       aes(x=flipper_length_mm, 
+           y=bill_length_mm, 
+           color=sample(species, replace = TRUE))) + 
+  geom_point(alpha=0.8) +
+  scale_color_discrete_divergingx(palette="Zissou 1") +
+  ggtitle("Permuted") +
+  theme(legend.position = "none")
+p1/p2
+```
+:::
+
+:::
+
+::::
+
+## Creating null samples, example 2
+
+:::: {.columns}
+::: {.column width=50% .f80}
+
+```{r}
+#| eval: false
+#| echo: true
+LM_FIT <- lm(VAR2 ~ VAR1, 
+             data = DATA)
+FIT_ALL <- augment(LM_FIT)
+ggplot(FIT_ALL, aes(x=.FITTED, 
+                    y=.RESID)) + 
+  geom_point()
+```
+
+::: {.fragment}
+*There is no relationship between residuals and fitted values.* This is $H_o$.
+:::
+::: {.fragment}
+<br>
+Break any association by 
+
+- permuting residuals,
+- or residual rotation, 
+- or simulate residuals from a normal distribution.
+:::
+
+:::
+::: {.column width=50%}
+
+::: {.fragment}
+```{r}
+#| fig-width: 3
+#| fig-height: 5.5
+#| out-width: 60%
+cars_lm <- lm(dist ~ speed, data = cars)
+cars_all <- augment(cars_lm)
+set.seed(1235)
+ggplot(lineup(null_lm(dist ~ speed, method="rotate"), 
+                    cars_all, n=2, pos=1), aes(x=.fitted, y=.resid)) + 
+  geom_point() +
+  facet_wrap(~.sample, ncol=1) +
+  theme(axis.title = element_blank(),
+        axis.text = element_blank())
+```
+:::
+
+:::
+
+::::
+
+## Conducting a lineup test {.center}
+
+## Steps
+
+1. Create a lineup of $m-1$ null plots + 1 data plot, where data plot is randomly placed among nulls. Remove any distracting information, like tick labels, titles.
+2. Ask uninvolved observer(s) to pick the plot that is most different. (May need to use a crowd-sourcing service.)
+3. Compute the probability that the data plot was chosen, assuming it is no different from the null plots. This is the $p$-value.
+4. Decide to reject or fail to reject the null.
+
+## Lineup example 1 <span style="font-size: 70%;"> (1/2) </span>
+
+::: {.f60}
+```{r}
+#| code-fold: true
+#| echo: true
+#| fig-width: 12
+#| fig-height: 8
+#| out.width: 80%
+set.seed(241)
+ggplot(lineup(null_permute("species"), penguins, n=15), 
+       aes(x=flipper_length_mm, 
+           y=bill_length_mm, 
+           color=species)) + 
+  geom_point(alpha=0.8) +
+  facet_wrap(~.sample, ncol=5) +
+  scale_color_discrete_divergingx(palette="Zissou 1") +
+  theme(legend.position = "none",
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        panel.grid.major = element_blank())
+```
+:::
+
+## Lineup example 1 <span style="font-size: 70%;"> (2/2) </span>
+
+If 10 people are shown this lineup and all 10 pick plot 2, which is the data plot, the $p$-value will be 0.
+
+Generally, we can compute the probability that the data plot is chosen by $x$ out of $K$ observers, shown a lineup of $m$ plots, using a simulation approach that extends from a binomial distribution, with $p=1/m$.
+
+```{r}
+#| echo: true
+pvisual(10, 10, 15)
+```
+
+This means we would reject $H_o$ and conclude that there is a difference in the distribution of bill length and flipper length between the species of penguins. 
+
+## Lineup example 2 <span style="font-size: 70%;"> (1/2) </span>
+
+::: {.f60}
+```{r}
+#| code-fold: true
+#| echo: true
+#| fig-width: 9
+#| fig-height: 6
+#| out.width: 80%
+data(wasps)
+set.seed(258)
+wasps_l <- lineup(null_permute("Group"), wasps[,-1], n=15)
+wasps_l <- wasps_l %>%
+  mutate(LD1 = NA, LD2 = NA)
+for (i in unique(wasps_l$.sample)) {
+  x <- filter(wasps_l, .sample == i)
+  xlda <- MASS::lda(Group~., data=x[,1:42])
+  xp <- MASS:::predict.lda(xlda, x, dimen=2)$x
+  wasps_l$LD1[wasps_l$.sample == i] <- xp[,1]
+  wasps_l$LD2[wasps_l$.sample == i] <- xp[,2]
+}
+ggplot(wasps_l, 
+       aes(x=LD1, 
+           y=LD2, 
+           color=Group)) + 
+  geom_point(alpha=0.8) +
+  facet_wrap(~.sample, ncol=5) +
+  scale_color_discrete_divergingx(palette="Zissou 1") +
+  theme(legend.position = "none",
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        panel.grid.major = element_blank())
+```
+:::
+
+## Lineup example 2 <span style="font-size: 70%;"> (2/2) </span>
+
+If 10 people are shown this lineup and 1 picked the data plot (position 6), which is the data plot, the $p$-value will be large.
+
+```{r}
+#| echo: true
+pvisual(1, 10, 15)
+```
+
+This means we would NOT reject $H_o$ and conclude that there is NO difference in the distribution of groups. 
+
+## Lineup example 3
+
+## Lineup example 4
+
+## Practical considerations
+
+- Testing can be done informally with the `nullabor` package
+- For practical use, one should
+    - Create multiple lineups for a data plot, different positions, different nulls
+    - Show each to different groups of observers
+    - Compute $p$-value by combining results from each lineup.
+
+## YOUR TURN
+
+## Testing for best plot design {.center}

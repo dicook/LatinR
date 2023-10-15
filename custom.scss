@@ -16,10 +16,30 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 2px;
 }
 
-.textbox-container {
-  padding-top: 5px;
-  padding-left: 10px;
-  color: black;
-  background-color: white;
-  border-bottom-right-radius: 10px;
+.center-align h2 {
+  text-align: center !important
+}
+
+li {
+  line-height: 1;
+}
+
+.f80 {
+  font-size: 80%;
+}
+
+.f80 p {
+  line-height: 1.3;
+}
+
+.f70 {
+  font-size: 70%;
+}
+
+.f60 {
+  font-size: 60%;
+}
+
+.f50 {
+  font-size: 50%;
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
+<script src="slides1_files/libs/tone/tone.js"></script>
 <script src="slides1_files/libs/clipboard/clipboard.min.js"></script>
 <script src="slides1_files/libs/quarto-html/tabby.min.js"></script>
 <script src="slides1_files/libs/quarto-html/popper.min.js"></script>
@@ -60,45 +61,47 @@
       }
     pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
     div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
+      { color: #007020; background-color: #f3f5f6; }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
+    code span { color: #007020; } /* Normal */
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
     code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="slides1_files/libs/revealjs/dist/theme/quarto.css">
   <link href="slides1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="slides1_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="slides1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="slides1_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="slides1_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="slides1_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
@@ -411,7 +414,7 @@ Dianne Cook <br> Monash University
 </div>
 
 </section>
-<section id="session-1-making-effective-plots-using-ggplot2s-grammar-of-graphics" class="slide level2 center middle">
+<section id="session-1-making-effective-plots-using-ggplot2s-grammar-of-graphics" class="slide level2 center center-align">
 <h2>Session 1: Making effective plots using ggplot2’s grammar of graphics</h2>
 </section>
 <section id="outline" class="slide level2">
@@ -435,24 +438,16 @@ Dianne Cook <br> Monash University
 <td style="text-align: left;">Organising data to map variables to plots</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">2:05-2:15</td>
-<td style="text-align: left;">YOUR TURN</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2:15-2:35</td>
+<td style="text-align: left;">2:05-2:35</td>
 <td style="text-align: left;">Making a variety of plots</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">2:35-2:45</td>
-<td style="text-align: left;">YOUR TURN</td>
-</tr>
 <tr class="even">
-<td style="text-align: left;">2:45-3:00</td>
+<td style="text-align: left;">2:35-3:00</td>
 <td style="text-align: left;">Do but don’t, and cognitive principles</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">3:00-3:30</td>
-<td style="text-align: left;">BREAK</td>
+<td style="text-align: left;">COFFEE BREAK</td>
 </tr>
 </tbody>
 </table>
@@ -595,8 +590,8 @@ Dianne Cook <br> Monash University
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-2cd178ce9afd65db22b5" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-2cd178ce9afd65db22b5">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9"],["URY","URY","URY","URY","URY","URY","URY","URY","URY"],[2013,2014,2015,2016,2017,2018,2019,2020,2021],[22,33,26,28,21,20,24,31,14],[null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null],[80,73,83,69,82,83,103,101,85],[142,138,135,135,127,155,157,137,153],[102,109,115,122,128,155,152,126,129],[100,97,86,98,104,119,124,103,100],[83,75,87,77,73,80,100,65,96],[66,63,69,64,71,78,99,100,89],[30,24,27,23,30,27,18,30,20],[null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null],[35,60,50,46,52,53,46,56,55],[71,59,61,45,81,66,57,58,58],[44,34,57,58,62,62,56,42,49],[31,26,40,29,37,30,38,44,41],[40,23,32,38,30,35,27,35,32],[35,48,32,47,35,39,56,40,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>iso3<\/th>\n      <th>year<\/th>\n      <th>newrel_m014<\/th>\n      <th>newrel_m1519<\/th>\n      <th>newrel_m2024<\/th>\n      <th>newrel_m1524<\/th>\n      <th>newrel_m2534<\/th>\n      <th>newrel_m3544<\/th>\n      <th>newrel_m4554<\/th>\n      <th>newrel_m5564<\/th>\n      <th>newrel_m65<\/th>\n      <th>newrel_f014<\/th>\n      <th>newrel_f1519<\/th>\n      <th>newrel_f2024<\/th>\n      <th>newrel_f1524<\/th>\n      <th>newrel_f2534<\/th>\n      <th>newrel_f3544<\/th>\n      <th>newrel_f4554<\/th>\n      <th>newrel_f5564<\/th>\n      <th>newrel_f65<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ce88eac591a45834bd79" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ce88eac591a45834bd79">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9"],["URY","URY","URY","URY","URY","URY","URY","URY","URY"],[2013,2014,2015,2016,2017,2018,2019,2020,2021],[22,33,26,28,21,20,24,31,14],[null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null],[80,73,83,69,82,83,103,101,85],[142,138,135,135,127,155,157,137,153],[102,109,115,122,128,155,152,126,129],[100,97,86,98,104,119,124,103,100],[83,75,87,77,73,80,100,65,96],[66,63,69,64,71,78,99,100,89],[30,24,27,23,30,27,18,30,20],[null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null],[35,60,50,46,52,53,46,56,55],[71,59,61,45,81,66,57,58,58],[44,34,57,58,62,62,56,42,49],[31,26,40,29,37,30,38,44,41],[40,23,32,38,30,35,27,35,32],[35,48,32,47,35,39,56,40,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>iso3<\/th>\n      <th>year<\/th>\n      <th>newrel_m014<\/th>\n      <th>newrel_m1519<\/th>\n      <th>newrel_m2024<\/th>\n      <th>newrel_m1524<\/th>\n      <th>newrel_m2534<\/th>\n      <th>newrel_m3544<\/th>\n      <th>newrel_m4554<\/th>\n      <th>newrel_m5564<\/th>\n      <th>newrel_m65<\/th>\n      <th>newrel_f014<\/th>\n      <th>newrel_f1519<\/th>\n      <th>newrel_f2024<\/th>\n      <th>newrel_f1524<\/th>\n      <th>newrel_f2534<\/th>\n      <th>newrel_f3544<\/th>\n      <th>newrel_f4554<\/th>\n      <th>newrel_f5564<\/th>\n      <th>newrel_f65<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -607,8 +602,8 @@ Dianne Cook <br> Monash University
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e87aaefa42f1fe0f73e5" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e87aaefa42f1fe0f73e5">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7"],["economics","economics","economics","economics","economics","economics","economics"],["ARIZONA STATE UNIVERSITY","AUBURN UNIVERSITY","BOSTON COLLEGE","BOSTON UNIVERSITY","BRANDEIS UNIVERSITY","BROWN UNIVERSITY","CALIFORNIA INSTITUTE OF TECHNOLOGY"],[0.9,0.79,0.51,0.49,0.3,0.84,0.99],[1.57,0.64,1.03,2.66,3.03,2.31,2.31],[31.3,77.59999999999999,43.5,36.9,36.8,27.1,56.4],[31.7,44.4,46.8,34.2,48.7,54.6,83.3],[5.6,3.84,5,5.5,5.29,6,4],[13.3,8.300000000000001,0,0,0,10.5,11.1],[17.6,15.4,16.7,66.7,45,13.3,5.6],[36.4,23.8,40.6,37.2,29.2,30.9,34.4],[72.7,61.9,76.2,87.2,87.5,82.7,40.6],[2.8,3.8,8,11.6,5,8.800000000000001,3.2],[779,709,796,788,750,781,800],[18,14,25,34,21,31,18],[null,7,20,26,33,32,0],[33,21,64,148,24,81,32]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>subject<\/th>\n      <th>Inst<\/th>\n      <th>AvNumPubs<\/th>\n      <th>AvNumCits<\/th>\n      <th>PctFacGrants<\/th>\n      <th>PctCompletion<\/th>\n      <th>MedianTimetoDegree<\/th>\n      <th>PctMinorityFac<\/th>\n      <th>PctFemaleFac<\/th>\n      <th>PctFemaleStud<\/th>\n      <th>PctIntlStud<\/th>\n      <th>AvNumPhDs<\/th>\n      <th>AvGREs<\/th>\n      <th>TotFac<\/th>\n      <th>PctAsstProf<\/th>\n      <th>NumStud<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,8,9,10,11,12,13,14,15,16]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-279db4d48240a9a7eb16" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-279db4d48240a9a7eb16">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7"],["economics","economics","economics","economics","economics","economics","economics"],["ARIZONA STATE UNIVERSITY","AUBURN UNIVERSITY","BOSTON COLLEGE","BOSTON UNIVERSITY","BRANDEIS UNIVERSITY","BROWN UNIVERSITY","CALIFORNIA INSTITUTE OF TECHNOLOGY"],[0.9,0.79,0.51,0.49,0.3,0.84,0.99],[1.57,0.64,1.03,2.66,3.03,2.31,2.31],[31.3,77.59999999999999,43.5,36.9,36.8,27.1,56.4],[31.7,44.4,46.8,34.2,48.7,54.6,83.3],[5.6,3.84,5,5.5,5.29,6,4],[13.3,8.300000000000001,0,0,0,10.5,11.1],[17.6,15.4,16.7,66.7,45,13.3,5.6],[36.4,23.8,40.6,37.2,29.2,30.9,34.4],[72.7,61.9,76.2,87.2,87.5,82.7,40.6],[2.8,3.8,8,11.6,5,8.800000000000001,3.2],[779,709,796,788,750,781,800],[18,14,25,34,21,31,18],[null,7,20,26,33,32,0],[33,21,64,148,24,81,32]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>subject<\/th>\n      <th>Inst<\/th>\n      <th>AvNumPubs<\/th>\n      <th>AvNumCits<\/th>\n      <th>PctFacGrants<\/th>\n      <th>PctCompletion<\/th>\n      <th>MedianTimetoDegree<\/th>\n      <th>PctMinorityFac<\/th>\n      <th>PctFemaleFac<\/th>\n      <th>PctFemaleStud<\/th>\n      <th>PctIntlStud<\/th>\n      <th>AvNumPhDs<\/th>\n      <th>AvGREs<\/th>\n      <th>TotFac<\/th>\n      <th>PctAsstProf<\/th>\n      <th>NumStud<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,8,9,10,11,12,13,14,15,16]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -619,8 +614,8 @@ Dianne Cook <br> Monash University
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d5b1695448c642b936f7" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-d5b1695448c642b936f7">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11"],["UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560"],[2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021],[6,6,7,7,8,8,9,9,10,10,11],["PRCP","TAVG","PRCP","TAVG","PRCP","TAVG","PRCP","TAVG","PRCP","TAVG","PRCP"],[0,164,0,95,0,100,0,163,272,188,0],[8,129,0,109,0,77,450,137,0,160,112],[0,143,null,112,0,117,0,146,5,136,36],[5,176,null,114,0,111,0,139,0,160,0],[610,127,0,111,null,131,5,142,0,186,8],[0,107,0,143,0,179,0,147,0,148,0],[0,113,0,160,0,199,109,147,0,125,3],[0,147,10,179,0,110,526,149,0,129,0],[0,155,0,208,531,83,211,142,0,153,0],[3,156,0,145,74,78,0,132,0,171,0],[0,111,0,111,0,103,0,159,46,163,0],[0,159,30,162,0,92,0,191,33,174,0],[0,173,0,116,0,87,0,142,0,177,0],[0,139,0,112,0,111,30,151,381,194,290],[0,96,295,111,null,91,0,144,0,149,0],[0,90,0,102,0,142,0,184,0,157,0],[0,85,5,105,0,142,0,194,0,174,0],[0,81,0,98,0,131,0,174,0,167,0],[0,93,0,84,0,131,0,169,0,166,0],[0,96,0,111,0,150,15,160,0,201,0],[0,107,0,121,0,144,0,126,0,211,0],[0,122,0,152,0,157,0,133,0,206,0],[0,144,0,181,0,123,0,153,23,181,0],[48,133,0,129,0,121,0,150,0,199,0],[3,133,249,159,0,121,0,162,0,240,0],[0,112,0,109,0,141,0,193,0,279,246],[0,71,0,85,0,118,0,159,0,283,0],[0,83,0,76,0,165,8,149,0,288,0],[0,89,null,82,0,153,3,178,0,241,632],[0,78,0,107,0,208,0,164,0,251,0],[null,null,0,107,0,244,null,null,0,185,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>id<\/th>\n      <th>year<\/th>\n      <th>month<\/th>\n      <th>element<\/th>\n      <th>VALUE1<\/th>\n      <th>VALUE2<\/th>\n      <th>VALUE3<\/th>\n      <th>VALUE4<\/th>\n      <th>VALUE5<\/th>\n      <th>VALUE6<\/th>\n      <th>VALUE7<\/th>\n      <th>VALUE8<\/th>\n      <th>VALUE9<\/th>\n      <th>VALUE10<\/th>\n      <th>VALUE11<\/th>\n      <th>VALUE12<\/th>\n      <th>VALUE13<\/th>\n      <th>VALUE14<\/th>\n      <th>VALUE15<\/th>\n      <th>VALUE16<\/th>\n      <th>VALUE17<\/th>\n      <th>VALUE18<\/th>\n      <th>VALUE19<\/th>\n      <th>VALUE20<\/th>\n      <th>VALUE21<\/th>\n      <th>VALUE22<\/th>\n      <th>VALUE23<\/th>\n      <th>VALUE24<\/th>\n      <th>VALUE25<\/th>\n      <th>VALUE26<\/th>\n      <th>VALUE27<\/th>\n      <th>VALUE28<\/th>\n      <th>VALUE29<\/th>\n      <th>VALUE30<\/th>\n      <th>VALUE31<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-92f29f36aa957f9d25c6" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-92f29f36aa957f9d25c6">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11"],["UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560","UYM00086560"],[2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021],[6,6,7,7,8,8,9,9,10,10,11],["PRCP","TAVG","PRCP","TAVG","PRCP","TAVG","PRCP","TAVG","PRCP","TAVG","PRCP"],[0,164,0,95,0,100,0,163,272,188,0],[8,129,0,109,0,77,450,137,0,160,112],[0,143,null,112,0,117,0,146,5,136,36],[5,176,null,114,0,111,0,139,0,160,0],[610,127,0,111,null,131,5,142,0,186,8],[0,107,0,143,0,179,0,147,0,148,0],[0,113,0,160,0,199,109,147,0,125,3],[0,147,10,179,0,110,526,149,0,129,0],[0,155,0,208,531,83,211,142,0,153,0],[3,156,0,145,74,78,0,132,0,171,0],[0,111,0,111,0,103,0,159,46,163,0],[0,159,30,162,0,92,0,191,33,174,0],[0,173,0,116,0,87,0,142,0,177,0],[0,139,0,112,0,111,30,151,381,194,290],[0,96,295,111,null,91,0,144,0,149,0],[0,90,0,102,0,142,0,184,0,157,0],[0,85,5,105,0,142,0,194,0,174,0],[0,81,0,98,0,131,0,174,0,167,0],[0,93,0,84,0,131,0,169,0,166,0],[0,96,0,111,0,150,15,160,0,201,0],[0,107,0,121,0,144,0,126,0,211,0],[0,122,0,152,0,157,0,133,0,206,0],[0,144,0,181,0,123,0,153,23,181,0],[48,133,0,129,0,121,0,150,0,199,0],[3,133,249,159,0,121,0,162,0,240,0],[0,112,0,109,0,141,0,193,0,279,246],[0,71,0,85,0,118,0,159,0,283,0],[0,83,0,76,0,165,8,149,0,288,0],[0,89,null,82,0,153,3,178,0,241,632],[0,78,0,107,0,208,0,164,0,251,0],[null,null,0,107,0,244,null,null,0,185,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>id<\/th>\n      <th>year<\/th>\n      <th>month<\/th>\n      <th>element<\/th>\n      <th>VALUE1<\/th>\n      <th>VALUE2<\/th>\n      <th>VALUE3<\/th>\n      <th>VALUE4<\/th>\n      <th>VALUE5<\/th>\n      <th>VALUE6<\/th>\n      <th>VALUE7<\/th>\n      <th>VALUE8<\/th>\n      <th>VALUE9<\/th>\n      <th>VALUE10<\/th>\n      <th>VALUE11<\/th>\n      <th>VALUE12<\/th>\n      <th>VALUE13<\/th>\n      <th>VALUE14<\/th>\n      <th>VALUE15<\/th>\n      <th>VALUE16<\/th>\n      <th>VALUE17<\/th>\n      <th>VALUE18<\/th>\n      <th>VALUE19<\/th>\n      <th>VALUE20<\/th>\n      <th>VALUE21<\/th>\n      <th>VALUE22<\/th>\n      <th>VALUE23<\/th>\n      <th>VALUE24<\/th>\n      <th>VALUE25<\/th>\n      <th>VALUE26<\/th>\n      <th>VALUE27<\/th>\n      <th>VALUE28<\/th>\n      <th>VALUE29<\/th>\n      <th>VALUE30<\/th>\n      <th>VALUE31<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -805,17 +800,16 @@ Dianne Cook <br> Monash University
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code for penguins plot</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>bill_length_mm, </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color=</span>species)) <span class="sc">+</span> </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete_divergingx</span>(<span class="at">palette=</span><span class="st">"Zissou 1"</span>) <span class="sc">+</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(), </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="st">"8"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>bill_length_mm, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color=</span>species)) <span class="sc">+</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete_divergingx</span>(<span class="at">palette=</span><span class="st">"Zissou 1"</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="st">"8"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -855,8 +849,8 @@ Dianne Cook <br> Monash University
 </div>
 </div>
 </section>
-<section id="example-3" class="slide level2">
-<h2>Example 3</h2>
+<section id="example-3-15" class="slide level2">
+<h2>Example 3 <span style="font-size: 70%;"> (1/5) </span></h2>
 <div class="columns">
 <div class="column" style="width:49%;">
 <p>First get the data in tidy form</p>
@@ -892,8 +886,8 @@ Dianne Cook <br> Monash University
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-dfd39da93b8e28d19bda" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-dfd39da93b8e28d19bda">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126"],["URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY"],[2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021],["f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m"],["0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65"],[30,35,71,44,31,40,35,22,80,142,102,100,83,66,24,60,59,34,26,23,48,33,73,138,109,97,75,63,27,50,61,57,40,32,32,26,83,135,115,86,87,69,23,46,45,58,29,38,47,28,69,135,122,98,77,64,30,52,81,62,37,30,35,21,82,127,128,104,73,71,27,53,66,62,30,35,39,20,83,155,155,119,80,78,18,46,57,56,38,27,56,24,103,157,152,124,100,99,30,56,58,42,44,35,40,31,101,137,126,103,65,100,20,55,58,49,41,32,30,14,85,153,129,100,96,89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>iso3<\/th>\n      <th>year<\/th>\n      <th>sex<\/th>\n      <th>age<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-0be59b986c8221a9a4a1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0be59b986c8221a9a4a1">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126"],["URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY"],[2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021],["f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m"],["0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65"],[30,35,71,44,31,40,35,22,80,142,102,100,83,66,24,60,59,34,26,23,48,33,73,138,109,97,75,63,27,50,61,57,40,32,32,26,83,135,115,86,87,69,23,46,45,58,29,38,47,28,69,135,122,98,77,64,30,52,81,62,37,30,35,21,82,127,128,104,73,71,27,53,66,62,30,35,39,20,83,155,155,119,80,78,18,46,57,56,38,27,56,24,103,157,152,124,100,99,30,56,58,42,44,35,40,31,101,137,126,103,65,100,20,55,58,49,41,32,30,14,85,153,129,100,96,89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>iso3<\/th>\n      <th>year<\/th>\n      <th>sex<\/th>\n      <th>age<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -901,8 +895,8 @@ Dianne Cook <br> Monash University
 </div>
 </div>
 </section>
-<section id="example-3-1" class="slide level2">
-<h2>Example 3</h2>
+<section id="example-3-25" class="slide level2">
+<h2>Example 3 <span style="font-size: 70%;"> (2/5) </span></h2>
 <div class="columns">
 <div class="column" style="width:49%;">
 <p>How many ways can we plot all three variables?</p>
@@ -911,8 +905,8 @@ Dianne Cook <br> Monash University
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-4f65e75962d334d11b32" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-4f65e75962d334d11b32">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126"],["URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY"],[2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021],["f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m"],["0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65"],[30,35,71,44,31,40,35,22,80,142,102,100,83,66,24,60,59,34,26,23,48,33,73,138,109,97,75,63,27,50,61,57,40,32,32,26,83,135,115,86,87,69,23,46,45,58,29,38,47,28,69,135,122,98,77,64,30,52,81,62,37,30,35,21,82,127,128,104,73,71,27,53,66,62,30,35,39,20,83,155,155,119,80,78,18,46,57,56,38,27,56,24,103,157,152,124,100,99,30,56,58,42,44,35,40,31,101,137,126,103,65,100,20,55,58,49,41,32,30,14,85,153,129,100,96,89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>iso3<\/th>\n      <th>year<\/th>\n      <th>sex<\/th>\n      <th>age<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-6d5933d844f23a2c35fe" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-6d5933d844f23a2c35fe">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126"],["URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY","URY"],[2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021],["f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m","f","f","f","f","f","f","f","m","m","m","m","m","m","m"],["0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65","0-14","15-24","25-34","35-44","45-54","55-64","65"],[30,35,71,44,31,40,35,22,80,142,102,100,83,66,24,60,59,34,26,23,48,33,73,138,109,97,75,63,27,50,61,57,40,32,32,26,83,135,115,86,87,69,23,46,45,58,29,38,47,28,69,135,122,98,77,64,30,52,81,62,37,30,35,21,82,127,128,104,73,71,27,53,66,62,30,35,39,20,83,155,155,119,80,78,18,46,57,56,38,27,56,24,103,157,152,124,100,99,30,56,58,42,44,35,40,31,101,137,126,103,65,100,20,55,58,49,41,32,30,14,85,153,129,100,96,89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>iso3<\/th>\n      <th>year<\/th>\n      <th>sex<\/th>\n      <th>age<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -942,8 +936,8 @@ Dianne Cook <br> Monash University
 </div>
 </div>
 </section>
-<section id="example-3-2" class="slide level2">
-<h2>Example 3</h2>
+<section id="example-3-35" class="slide level2">
+<h2>Example 3 <span style="font-size: 70%;"> (3/5) </span></h2>
 
 <img data-src="slides1_files/figure-revealjs/unnamed-chunk-28-1.png" style="width:100.0%" class="r-stretch quarto-figure-center"><div style="font-size: 60%;">
 <p>How are variables mapped to create this plot?</p>
@@ -954,8 +948,8 @@ Dianne Cook <br> Monash University
 <p><br> Observations: More incidence among males, especially with age. No clear temporal trend.</p>
 </div>
 </section>
-<section id="example-3-3" class="slide level2">
-<h2>Example 3</h2>
+<section id="example-3-45" class="slide level2">
+<h2>Example 3 <span style="font-size: 70%;"> (4/5) </span></h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -984,8 +978,8 @@ Dianne Cook <br> Monash University
 <p><img data-src="slides1_files/figure-revealjs/ury-tb-trend-1.png" class="absolute" style="top: 540px; left: 850px; width: 250px; "></p>
 </div>
 </section>
-<section id="example-3-4" class="slide level2">
-<h2>Example 3</h2>
+<section id="example-3-55" class="slide level2">
+<h2>Example 3 <span style="font-size: 70%;"> (5/5) </span></h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1076,13 +1070,14 @@ Dianne Cook <br> Monash University
 <section id="scaling" class="slide level2">
 <h2>Scaling</h2>
 </section>
-<section id="example-4" class="slide level2">
-<h2>Example 4</h2>
-<p>residual plot</p>
-</section>
-<section id="example-5" class="slide level2">
-<h2>Example 5</h2>
-<p>soccer plot</p>
+<section id="your-turn-1" class="slide level2">
+<h2>Your turn</h2>
+<div class="center">
+<ol type="1">
+<li>Create two new plot arrangements of the Uruguay TB data. What do they put the focus on?</li>
+<li>Change the scaling on one of the plots, where it will change it. How does the information change?</li>
+</ol>
+</div>
 </section>
 <section id="some-your-turns" class="slide level2">
 <h2>Some your turns</h2>
@@ -1098,15 +1093,21 @@ Dianne Cook <br> Monash University
 <p>Show the basic code of the tb plots, and how it is small changes to get different plots.</p>
 <p>As opposed to separately making data sets for males, females - at least can do in dot plot.</p>
 </section>
+<section id="transformation" class="slide level2">
+<h2>Transformation</h2>
+</section>
+<section id="proximity" class="slide level2">
+<h2>Proximity</h2>
+</section>
 <section id="cognitive-principles" class="slide level2">
 <h2>Cognitive principles</h2>
 <ul>
-<li>Cleveland</li>
-<li>Transforming</li>
+<li>Cleveland’s principles</li>
 </ul>
 </section>
-<section id="some-your-turns-1" class="slide level2">
-<h2>Some your turns</h2>
+<section id="your-turn-2" class="slide level2">
+<h2>Your turn</h2>
+<p>Take the following plot, and make it more difficult to read.</p>
 <div class="footer footer-default">
 
 </div>
@@ -1121,6 +1122,8 @@ Dianne Cook <br> Monash University
   <script src="slides1_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="slides1_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="slides1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="slides1_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="slides1_files/libs/revealjs/plugin/quarto-tone/tone.js"></script>
   <script src="slides1_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -1142,7 +1145,8 @@ Dianne Cook <br> Monash University
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1313,7 +1317,7 @@ Dianne Cook <br> Monash University
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoTone, QuartoSupport,
 
           RevealMath,
           RevealNotes,
