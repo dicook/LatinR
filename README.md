@@ -49,3 +49,6 @@ install.packages(c("ggplot2", "tidyr", "dplyr", "readr", "nullabor", "colorspace
 3. Open your RStudio be clicking on `tutorial.Rproj`. 
 
 There might be a few more packages ot install to run various parts.
+
+GitHub repo with all materials is 
+[https://github.com/dicook/LatinR](https://github.com/dicook/LatinR).
