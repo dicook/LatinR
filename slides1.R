@@ -405,12 +405,9 @@ ggplot(tb_ury_sa,
         axis.text = element_text(size="10"))
 
 
-
-options(width=40)
-
-
 #| eval: false
 #| echo: true
+#| code-line-numbers: "5"
 ## ggplot(tb_ury_sa,
 ##        aes(x=year,
 ##            y=count,
@@ -421,7 +418,7 @@ options(width=40)
 
 #| eval: false
 #| echo: true
-#| width: 40
+#| code-line-numbers: "5"
 ## ggplot(tb_ury_sa,
 ##        aes(x=year,
 ##            y=count,
@@ -432,6 +429,7 @@ options(width=40)
 
 #| eval: false
 #| echo: true
+#| code-line-numbers: "5,6"
 ## ggplot(tb_ury_sa,
 ##        aes(x=year,
 ##            y=count,
@@ -443,6 +441,7 @@ options(width=40)
 
 #| eval: false
 #| echo: true
+#| code-line-numbers: "2,6"
 ## ggplot(tb_ury_sa,
 ##        aes(x=age,
 ##            y=count,
@@ -464,4 +463,122 @@ ggplot(tb_ury_sa,
   scale_fill_discrete_divergingx(palette="Fall") +
   theme(legend.title = element_blank(),
         axis.text = element_text(size="10"))
+
+
+#| eval: false
+#| echo: true
+## facet_wrap(..., scales="free_y")
+
+
+#| eval: false
+#| echo: true
+#| code-line-numbers: "6"
+## ggplot(tb_sub, aes(x=year,
+##                    y=c_newinc,
+##                    colour=iso3)) +
+##   geom_point() +
+##   geom_smooth(se=F) +
+##   facet_wrap(~iso3, ncol=2,
+##              scales="free_y") +
+##   theme(legend.position = "none")
+
+
+#| eval: false
+#| echo: true
+#| code-line-numbers: "2,4,5,7,8,10,11,13"
+## ggplot() +
+##   geom_point(data = tb_ury,
+##     aes(x=year, y=c_newinc),
+##     colour="#F5191C") +
+##   geom_point(data = tb_aus,
+##     aes(x=year, y=c_newinc),
+##     colour="#3B99B1") +
+##   geom_smooth(data = tb_ury,
+##     aes(x=year, y=c_newinc),
+##     colour="#F5191C", se=F) +
+##   geom_smooth(data = tb_aus,
+##     aes(x=year, y=c_newinc),
+##     colour="#3B99B1", se=F)
+
+
+
+vis_spacing <- 'style="padding-left:20px;"'
+vis_spacing1 <- 'style="padding-left:10px;"'
+
+
+#| fig-width: 7
+#| fig-height: 5
+ggplot(tb_ury_sa, 
+       aes(x=year, 
+           y=count, 
+           colour=sex)) + 
+  geom_point() +
+  geom_smooth(se=F) +
+  facet_wrap(~age, ncol = 4) +
+  scale_color_discrete_divergingx(palette="Zissou 1") +
+  scale_x_continuous("year", 
+    breaks = seq(2013, 2021, 2), 
+    labels = c("13", "15", "17", "19", "21")) +
+  theme(axis.text = element_text(size="10")) +
+  ggtitle("Arrangement A")
+
+
+#| fig-width: 7
+#| fig-height: 5
+ggplot(tb_ury_sa, 
+       aes(x = year, y = count, colour = age)) +
+  geom_line() + geom_point() +
+  facet_wrap(~sex, ncol = 2) +
+  scale_color_discrete_divergingx(palette="Zissou 1") +
+  scale_x_continuous("year", 
+    breaks = seq(2013, 2021, 2), 
+    labels = c("13", "15", "17", "19", "21")) +
+  theme(axis.text = element_text(size="10")) +
+  ggtitle("Arrangement B")
+
+
+#| fig-width: 5
+#| fig-height: 3.5
+tb_ury_sa %>%
+  filter(age %in% c("35-44", "45-54"),
+         sex == "m") %>%
+  ggplot(mapping=aes(x=year, 
+                 y=count)) + 
+  geom_point() +
+  geom_smooth(aes(colour=age), se=F, method="lm") +
+  facet_wrap(~age, ncol = 2) +
+  scale_color_discrete_divergingx(palette="Zissou 1") +
+  scale_x_continuous("year", 
+    breaks = seq(2013, 2021, 2), 
+    labels = c("13", "15", "17", "19", "21")) +
+  theme(legend.position="none",
+        axis.text = element_text(size="10"))
+  
+
+
+#| fig-width: 3
+#| fig-height: 3
+#| out-width: 60%
+tb_ury_sa %>%
+  filter(age %in% c("35-44", "45-54"),
+         sex == "m") %>%
+  ggplot(mapping=aes(x=year, 
+                 y=count)) + 
+  geom_smooth(aes(colour=age), se=F, method="lm") +
+  scale_color_discrete_divergingx(palette="Zissou 1") +
+  scale_x_continuous("year", 
+    breaks = seq(2013, 2021, 2), 
+    labels = c("13", "15", "17", "19", "21")) +
+  theme(legend.position="none",
+        axis.text = element_text(size="10"))
+  
+
+
+#| echo: true
+library(nullabor)
+data(electoral)
+ggplot(electoral$polls, 
+       aes(x=Democrat, 
+           y=Margin)) +
+  geom_boxplot()
 

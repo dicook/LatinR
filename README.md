@@ -32,5 +32,8 @@ Background: Participants should have a good working knowledge of R, and tidy ver
 |4:40-5:00|	Testing for best plot design|
 
 [Session 1 Slides](https://dicook.github.io/LatinR/slides1.html)
+
 [Session 2 Slides](https://dicook.github.io/LatinR/slides2.html)
+
+[Zip file of materials]()
 
