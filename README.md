@@ -1,6 +1,6 @@
 # LatinR: Creating data plots for effective decision-making using statistical inference with R
 
-Instructor: Di Cook
+Instructor: Professor Di Cook, Department of Econometrics and Business Statistics, Monash University
 
 Website: [https://dicook.github.io/LatinR](https://dicook.github.io/LatinR)
 
