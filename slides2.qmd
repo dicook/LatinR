@@ -12,6 +12,7 @@ format:
 code-line-numbers: false
 message: false
 highlight-style: pygments
+footer: "[https://dicook.github.io/LatinR](https://dicook.github.io/LatinR)"
 ---
 
 ```{r, include = FALSE}
