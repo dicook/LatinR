@@ -35,5 +35,15 @@ Background: Participants should have a good working knowledge of R, and tidy ver
 
 [Session 2 Slides](https://dicook.github.io/LatinR/slides2.html)
 
-[Zip file of materials]()
+[Zip file of materials](https://dicook.github.io/LatinR/vis-tutorial.zip)
 
+## Getting started
+
+You should have a reasonably up to date version of R and R Studio, eg RStudio RStudio 2023.06.2 +561 and R version 4.3.1 (2023-06-16). 
+```
+install.packages(c("ggplot2", "tidyr", "dplyr", "readr", "nullabor", "colorspace", "palmerpenguins", "broom"))
+```
+
+Open your RStudio be clicking on `tutorial.Rproj`. 
+
+There might be a few more packages ot install to run various parts.
