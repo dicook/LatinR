@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="slides2_files/libs/tone/tone.js"></script>
+<script src="slides2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="slides2_files/libs/quarto-html/tabby.min.js"></script>
+<script src="slides2_files/libs/quarto-html/popper.min.js"></script>
+<script src="slides2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="slides2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="slides2_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="slides2_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="slides2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.3.433">
+
+  <meta name="author" content="Dianne Cook   Monash University">
+  <title>Creating data plots for effective decision-making using statistical inference with R</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="slides2_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="slides2_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #007020; background-color: #f3f5f6; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #007020; } /* Normal */
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="slides2_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="slides2_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="slides2_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="slides2_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="slides2_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="slides2_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="slides2_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Creating data plots for effective decision-making using statistical inference with R</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dianne Cook <br> Monash University 
+</div>
+</div>
+</div>
+
+</section>
+<section id="session-2-making-decisions-and-inferential-statements-based-on-data-plots" class="slide level2 center center-align">
+<h2>Session 2: Making decisions and inferential statements based on data plots</h2>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">time</th>
+<th style="text-align: left;">topic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">3:30-3:50</td>
+<td style="text-align: left;">What is your plot testing?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3:50-4:10</td>
+<td style="text-align: left;">Creating null samples</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4:10-4:40</td>
+<td style="text-align: left;">Conducting a lineup test</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4:40-5:00</td>
+<td style="text-align: left;">Testing for best plot design</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="what-is-your-plot-testing" class="slide level2">
+<h2>What is your plot testing?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>LM_FIT <span class="ot">&lt;-</span> <span class="fu">lm</span>(VAR2 <span class="sc">~</span> VAR1, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> DATA)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>FIT_ALL <span class="ot">&lt;-</span> <span class="fu">augment</span>(LM_FIT)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(FIT_ALL, <span class="fu">aes</span>(<span class="at">x=</span>.FITTED, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y=</span>.RESID)) <span class="sc">+</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br> What will we be assessing using this plot?</p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:40%;">
+<div class="fragment">
+<p>Is the model misspecified?</p>
+<ul>
+<li>non-linearity</li>
+<li>heteroskedasticity</li>
+<li>outliers/anomalies</li>
+<li>non-normality</li>
+<li>fitted value distribution</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="what-is-your-plot-testing-1" class="slide level2">
+<h2>What is your plot testing?</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-5-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p>What do you see?</p>
+<div class="fragment">
+<p>✗ non-linearity <br> ✓ heteroskedasticity <br> ✗ outliers/anomalies <br> ✗ non-normality <br> ✓ fitted value distribution is uniform</p>
+</div>
+<div class="fragment">
+<p><br> <span style="color: #F5191C;"> Are you sure? </span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="what-is-your-plot-testing-2" class="slide level2">
+<h2>What is your plot testing?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(DATA, </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>VAR1, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>VAR2, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color=</span>CLASS)) <span class="sc">+</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br> What will we be assessing using this plot?</p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:40%;">
+<div class="fragment">
+<p><br> Is there a difference between the groups?</p>
+<ul>
+<li>location</li>
+<li>shape</li>
+<li>outliers/anomalies</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="what-is-your-plot-testing-3" class="slide level2">
+<h2>What is your plot testing?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-7-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:40%;">
+<p>What do you see?</p>
+<div class="fragment">
+<p>There a difference between the groups</p>
+<p>✓ location <br> ✗ shape <br> ✓ outliers/anomalies</p>
+</div>
+<div class="fragment">
+<p><br> <span style="color: #F5191C;"> Are you sure? </span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="statistical-thinking" class="slide level2">
+<h2>Statistical thinking</h2>
+<ul>
+<li>Because the <span style="color: #3B99B1;"> plot </span> is specified using a functional mapping of the variables, it <span style="color: #3B99B1;"> is a statistic</span>.</li>
+<li>The null and alternative hypotheses are indicated from the plot description.</li>
+<li>Applying the function to a dataset provides the observed value.</li>
+</ul>
+</section>
+<section id="null-hypothesis-example-1" class="slide level2">
+<h2>Null hypothesis, example 1</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>LM_FIT <span class="ot">&lt;-</span> <span class="fu">lm</span>(VAR2 <span class="sc">~</span> VAR1, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> DATA)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>FIT_ALL <span class="ot">&lt;-</span> <span class="fu">augment</span>(LM_FIT)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(FIT_ALL, <span class="fu">aes</span>(<span class="at">x=</span>.FITTED, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y=</span>.RESID)) <span class="sc">+</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br> What is the null hypothesis?</p>
+<div class="fragment">
+<p><em>There is no relationship between residuals and fitted values.</em> This is <span class="math inline">\(H_o\)</span>.</p>
+</div>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:45%;">
+<div class="fragment f80">
+<p><br><br><br></p>
+<p><strong>Alternative hypothesis</strong>, <span class="math inline">\(H_a\)</span>:</p>
+<p><em>There is some relationship</em>, which might be</p>
+<ul>
+<li>non-linearity</li>
+<li>heteroskedasticity</li>
+<li>outliers/anomalies</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="null-hypothesis-example-2" class="slide level2">
+<h2>Null hypothesis, example 2</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(DATA, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>VAR1, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>VAR2, </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color=</span>CLASS)) <span class="sc">+</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br> What is the null hypothesis?</p>
+<div class="fragment">
+<p><em>There is no difference between the classes.</em> This is <span class="math inline">\(H_o\)</span>.</p>
+</div>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:45%;">
+<div class="fragment f80">
+<p><br><br><br> <strong>Alternative hypothesis</strong>, <span class="math inline">\(H_a\)</span>:</p>
+<p><em>There is some difference between the classes</em>, which might be</p>
+<ul>
+<li>location</li>
+<li>shape</li>
+<li>outliers/anomalies</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="your-turn" class="slide level2">
+<h2>YOUR TURN</h2>
+<p>What is being tested in each of these plot descriptions?</p>
+<div class="columns">
+<div class="column fragment" style="width:30%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(DATA, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>VAR1)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column fragment" style="width:38%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(DATA, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>VAR1, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill=</span>VAR2)) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column fragment" style="width:30%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(DATA, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>VAR1, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>VAR2)) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column fragment" style="width:30%;">
+<p>Distribution of VAR1 is ?</p>
+</div><div class="column fragment" style="width:38%;">
+<p>There is no relationship between VAR1 and VAR2. More specifically, the proportion of VAR2 in each level of VAR1 is the same.</p>
+</div><div class="column fragment f80" style="width:30%;">
+<p><br> There is no relationship between VAR1 and VAR2. Particularly, VAR2 is not dependent on VAR1 and there is no trend.</p>
+</div>
+</div>
+</section>
+<section id="creating-null-samples" class="slide level2 center">
+<h2>Creating null samples</h2>
+</section>
+<section id="statistical-thinking-1" class="slide level2">
+<h2>Statistical thinking</h2>
+<div class="columns">
+<div class="column f80" style="width:50%;">
+<p>Sampling distribution for a t-statistic. Values expected assuming <span class="math inline">\(H_o\)</span> is true. <span style="color: #F5191C;"> Shaded areas </span> indicate extreme values.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-13-1.png" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<p><br><br><br><br></p>
+<p><span style="color: #3B99B1;"> For making comparisons when plotting, draw a number of null samples, and plot them with the same script in the plot description.</span></p>
+</div>
+</div>
+</section>
+<section id="creating-null-samples-example-1" class="slide level2">
+<h2>Creating null samples, example 1</h2>
+<div class="columns">
+<div class="column f80" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(DATA, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>VAR1, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>VAR2, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color=</span>CLASS)) <span class="sc">+</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p><span class="math inline">\(H_o\)</span>: <em>There is no difference between the classes.</em></p>
+<div class="fragment">
+<p>How would you generate null samples?</p>
+</div>
+<div class="fragment">
+<p><br> Break any association by permuting (scrambling/shuffling/re-sampling) the CLASS variable.</p>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-15-1.png" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-null-samples-example-2" class="slide level2">
+<h2>Creating null samples, example 2</h2>
+<div class="columns">
+<div class="column f80" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>LM_FIT <span class="ot">&lt;-</span> <span class="fu">lm</span>(VAR2 <span class="sc">~</span> VAR1, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> DATA)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>FIT_ALL <span class="ot">&lt;-</span> <span class="fu">augment</span>(LM_FIT)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(FIT_ALL, <span class="fu">aes</span>(<span class="at">x=</span>.FITTED, </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y=</span>.RESID)) <span class="sc">+</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(H_o\)</span>: <em>There is no relationship between residuals and fitted values.</em></p>
+</div>
+<div class="fragment">
+<p>How would you generate null samples?</p>
+</div>
+<div class="fragment">
+<p><br> Break any association by</p>
+<ul>
+<li>permuting residuals,</li>
+<li>or residual rotation,</li>
+<li>or simulate residuals from a normal distribution.</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-17-1.png" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="conducting-a-lineup-test" class="slide level2 center">
+<h2>Conducting a lineup test</h2>
+</section>
+<section id="steps" class="slide level2">
+<h2>Steps</h2>
+<ol type="1">
+<li>Create a lineup of <span class="math inline">\(m-1\)</span> null plots + 1 data plot, where the data plot is randomly placed among nulls. Remove any distracting information, like tick labels, titles.</li>
+<li>Ask uninvolved observer(s) to pick the plot that is most different. (May need to use a crowd-sourcing service.)</li>
+<li>Compute the probability that the data plot was chosen, assuming it is no different from the null plots. This is the <span class="math inline">\(p\)</span>-value.</li>
+<li>Decide to reject or fail to reject the null.</li>
+</ol>
+</section>
+<section id="lineup-example-1-12" class="slide level2">
+<h2>Lineup example 1 <span style="font-size: 70%;"> (1/2) </span></h2>
+<div class="f60">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">241</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">lineup</span>(<span class="fu">null_permute</span>(<span class="st">"species"</span>), penguins, <span class="at">n=</span><span class="dv">15</span>), </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>bill_length_mm, </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color=</span>species)) <span class="sc">+</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>.sample, <span class="at">ncol=</span><span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete_divergingx</span>(<span class="at">palette=</span><span class="st">"Zissou 1"</span>) <span class="sc">+</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-18-1.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="lineup-example-1-22" class="slide level2">
+<h2>Lineup example 1 <span style="font-size: 70%;"> (2/2) </span></h2>
+<p>If 10 people are shown this lineup and all 10 pick plot 2, which is the data plot, the <span class="math inline">\(p\)</span>-value will be 0.</p>
+<p>Generally, we can compute the probability that the data plot is chosen by <span class="math inline">\(x\)</span> out of <span class="math inline">\(K\)</span> observers, shown a lineup of <span class="math inline">\(m\)</span> plots, using a simulation approach that extends from a binomial distribution, with <span class="math inline">\(p=1/m\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pvisual</span>(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      x simulated        binom
+[1,] 10         0 1.734168e-12</code></pre>
+</div>
+</div>
+<p>This means we would reject <span class="math inline">\(H_o\)</span> and conclude that there is a difference in the distribution of bill length and flipper length between the species of penguins.</p>
+</section>
+<section id="lineup-example-2-12" class="slide level2">
+<h2>Lineup example 2 <span style="font-size: 70%;"> (1/2) </span></h2>
+<div class="f60">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(wasps)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">258</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>wasps_l <span class="ot">&lt;-</span> <span class="fu">lineup</span>(<span class="fu">null_permute</span>(<span class="st">"Group"</span>), wasps[,<span class="sc">-</span><span class="dv">1</span>], <span class="at">n=</span><span class="dv">15</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>wasps_l <span class="ot">&lt;-</span> wasps_l <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">LD1 =</span> <span class="cn">NA</span>, <span class="at">LD2 =</span> <span class="cn">NA</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">unique</span>(wasps_l<span class="sc">$</span>.sample)) {</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">filter</span>(wasps_l, .sample <span class="sc">==</span> i)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  xlda <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(Group<span class="sc">~</span>., <span class="at">data=</span>x[,<span class="dv">1</span><span class="sc">:</span><span class="dv">42</span>])</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  xp <span class="ot">&lt;-</span> MASS<span class="sc">:::</span><span class="fu">predict.lda</span>(xlda, x, <span class="at">dimen=</span><span class="dv">2</span>)<span class="sc">$</span>x</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  wasps_l<span class="sc">$</span>LD1[wasps_l<span class="sc">$</span>.sample <span class="sc">==</span> i] <span class="ot">&lt;-</span> xp[,<span class="dv">1</span>]</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  wasps_l<span class="sc">$</span>LD2[wasps_l<span class="sc">$</span>.sample <span class="sc">==</span> i] <span class="ot">&lt;-</span> xp[,<span class="dv">2</span>]</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wasps_l, </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>LD1, </span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>LD2, </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">color=</span>Group)) <span class="sc">+</span> </span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>.sample, <span class="at">ncol=</span><span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete_divergingx</span>(<span class="at">palette=</span><span class="st">"Zissou 1"</span>) <span class="sc">+</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-20-1.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="lineup-example-2-22" class="slide level2">
+<h2>Lineup example 2 <span style="font-size: 70%;"> (2/2) </span></h2>
+<p>If 10 people are shown this lineup and 1 picked the data plot (position 6), which is the data plot, the <span class="math inline">\(p\)</span>-value will be large.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pvisual</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     x simulated     binom
+[1,] 1    0.4639 0.4983882</code></pre>
+</div>
+</div>
+<p>This means we would NOT reject <span class="math inline">\(H_o\)</span> and conclude that there is NO difference in the distribution of groups.</p>
+</section>
+<section id="what-is-the-p-value" class="slide level2">
+<h2>What is the <span class="math inline">\(p\)</span>-value?</h2>
+<ul>
+<li>Suppose <span class="math inline">\(X\)</span> is the number of nandus out of <span class="math inline">\(n\)</span> independent tosses.</li>
+<li>Let <span class="math inline">\(p\)</span> be the probability of getting a <img src="images/heads.jpg" height="70px" style="vertical-align:middle;"> for this coin.</li>
+<li><strong>Hypotheses</strong>: <span class="math inline">\(H_0: p = 0.5\)</span> vs.&nbsp;<span class="math inline">\(H_a: p &gt; 0.5\)</span>. <br> Alternative <span class="math inline">\(H_a\)</span> is saying we believe that the coin is biased to nandus. <br> Alternative needs to be decided before seeing data.</li>
+<li><strong>Assumption</strong>: Each toss is independent with equal chance of getting a nandu.</li>
+</ul>
+<!--
+**Test statistic**: $X \sim B(n, p)$. Recall $E(X\mid H_0) = np_0$.<br> We observe $n, x, \widehat{p}$. Test statistic is $\widehat{p} - p_0$.
+- **P-value**: $P(X ~ \geq ~ x\mid H_0)$ 
+- Conclusion**: Reject null hypothesis when the $p$-value is less than<br> some significance level $\alpha$. Usually $\alpha = 0.05$.
+-->
+</section>
+<section id="what-is-the-p-value-1" class="slide level2">
+<h2>What is the <span class="math inline">\(p\)</span>-value?</h2>
+<ul>
+<li>Suppose I have a coin that I’m going to flip <img src="images/tails.jpg" height="70px" style="vertical-align:middle;"> <img src="images/heads.jpg" height="70px" style="vertical-align:middle;"></li>
+<li><strong>Experiment 1</strong>: I flipped the coin 10 times and this is the result:</li>
+</ul>
+<center>
+<div class="cell" data-layout-align="center">
+<p><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"></p>
+</div>
+</center>
+<ul>
+<li>The result is 7 nandus and 3 tails. So 70% are nandus.</li>
+<li>Do you believe the coin is biased based on this data?</li>
+</ul>
+</section>
+<section id="what-is-the-p-value-2" class="slide level2">
+<h2>What is the <span class="math inline">\(p\)</span>-value?</h2>
+<ul>
+<li><strong>Experiment 2</strong>: Suppose now I flip the coin 100 times and this is the outcome:</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<p><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/heads.jpg" height="70px" style="vertical-align:middle;"><img src="images/tails.jpg" height="70px" style="vertical-align:middle;"></p>
+</div>
+<ul>
+<li>We observe 70 nandus and 30 tails. So again 70% are nandus.</li>
+<li>Based on this data, do you think the coin is biased?</li>
+</ul>
+</section>
+<section>
+<section id="calculate-the-p-value" class="title-slide slide level1 center">
+<h1>Calculate the <span class="math inline">\(p\)</span>-value</h1>
+<div class="columns">
+<div class="column f70" style="width:50%;">
+<p><strong>Experiment 1 (n=10)</strong></p>
+<ul>
+<li>We observed <span class="math inline">\(x=7\)</span>, or <span class="math inline">\(\widehat{p} = 0.7\)</span>.</li>
+<li>Assuming <span class="math inline">\(H_0\)</span> is true, we expect <span class="math inline">\(np=10\times 0.5=5\)</span>.</li>
+<li>Calculate the <span class="math inline">\(P(X \geq 7)\)</span></li>
+</ul>
+<p><br> <br></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">dbinom</span>(<span class="dv">7</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.171875</code></pre>
+</div>
+</div>
+</div><div class="column f70" style="width:50%;">
+<p><strong>Experiment 2 (n=100)</strong></p>
+<ul>
+<li>We observed <span class="math inline">\(x=70\)</span>, or <span class="math inline">\(\widehat{p} = 0.7\)</span>.</li>
+<li>Assuming <span class="math inline">\(H_0\)</span> is true, we expect <span class="math inline">\(np=100\times 0.5=50\)</span>.</li>
+<li>Calculate the <span class="math inline">\(P(X \geq 70)\)</span></li>
+</ul>
+<p><br> <br></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">dbinom</span>(<span class="dv">70</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">100</span>, <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.92507e-05</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="lineup-p-value-and-power" class="slide level2">
+<h2>Lineup <span class="math inline">\(p\)</span>-value and power</h2>
+<p>Suppose <span class="math inline">\(x\)</span> out of <span class="math inline">\(n\)</span> people detected the data plot from a lineup, then the <strong>visual inference p-value</strong> is given as <span class="math inline">\(P(X \geq x)\)</span> where <span class="math inline">\(X \sim B(n, 1/m)\)</span>, but</p>
+<div class="fragment">
+<p>the assumption of independence is not strictly satisfied, if people are shown the same lineup. So the <span class="math inline">\(p\)</span>-value is computed by simulation with</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>nullabor<span class="sc">::</span><span class="fu">pvisual</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<p><br> and the <strong>power of a lineup</strong> is estimated as <span class="math inline">\(x/n\)</span>. We’ll use this to compare the signal strengths for different plot designs. <em>Stay tuned!</em></p>
+</div>
+</section>
+<section id="lineup-example-3-12" class="slide level2">
+<h2>Lineup example 3 <span style="font-size: 70%;"> (1/2) </span></h2>
+<div class="columns">
+<div class="column" style="width:15%;">
+<p><br><br>Which plot is the most different?</p>
+</div><div class="column" style="width:85%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-26-1.png" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="lineup-example-3-22" class="slide level2">
+<h2>Lineup example 3 <span style="font-size: 70%;"> (2/2) </span></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Plot description was:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stars, <span class="fu">aes</span>(<span class="at">x=</span>temp)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>In particular, the researcher is interested to know if star temperature is a skewed distribution.</p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(H_o: X\sim exp(\widehat{\lambda})\)</span> <br> <span class="math inline">\(H_a:\)</span> it has a different distribution.</p>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<div class="fragment">
+<p>Generate the lineup with:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lineup</span>(<span class="fu">null_dist</span>(<span class="st">"temp"</span>, <span class="st">"exp"</span>, </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">rate =</span> <span class="dv">1</span> <span class="sc">/</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">mean</span>(dslabs<span class="sc">::</span>stars<span class="sc">$</span>temp))), </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  stars, <span class="at">n=</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<p><br><br>Compute the <span class="math inline">\(p\)</span>-value based on your responses to the lineup (previous slide).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pvisual</span>(<span class="at">n=</span>??, <span class="at">k=</span>??, <span class="at">m=</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="lineup-example-4-12" class="slide level2">
+<h2>Lineup example 4 <span style="font-size: 70%;"> (1/2) </span></h2>
+<div class="columns">
+<div class="column" style="width:15%;">
+<p><br><br>Which row of plots is the most different?</p>
+</div><div class="column" style="width:85%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-31-1.png" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="lineup-example-4-22" class="slide level2">
+<h2>Lineup example 4 <span style="font-size: 70%;"> (2/2) </span></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Plot description was:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tb_ury_sa, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>year, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>count, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill=</span>sex)) <span class="sc">+</span> </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position=</span><span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>age, <span class="at">ncol=</span><span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(H_o:\)</span> Proportion of males and females is the same for each year, conditional on age group <br> <span class="math inline">\(H_a:\)</span> it’s not</p>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<div class="fragment">
+<p>Generate the lineup with:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>b_ury_sa <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uncount</span>(count) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(age) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">sample</span>(sex, </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">replace =</span> <span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(sex, age, year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<p><br><br>Compute the <span class="math inline">\(p\)</span>-value based on your responses to the lineup (previous slide).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pvisual</span>(<span class="at">n=</span>??, <span class="at">k=</span>??, <span class="at">m=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="practical-considerations" class="slide level2">
+<h2>Practical considerations</h2>
+<ul>
+<li>Testing can be done informally with the <code>nullabor</code> package</li>
+<li>For practical use, one should
+<ul>
+<li>Create multiple lineups for a data plot, different positions, different nulls</li>
+<li>Show each to different groups of observers</li>
+<li>Compute <span class="math inline">\(p\)</span>-value by combining results from each lineup.</li>
+</ul></li>
+<li>Crowd-sourcing services include: <a href="https://www.mturk.com/">Amazon Mechanical Turk</a>, <a href="https://www.prolific.co/">prolific</a>, <a href="https://appen.com">Appen</a>, <a href="https://www.labvanced.com/">LABVANCED</a>.</li>
+</ul>
+</section>
+<section id="your-turn-1" class="slide level2">
+<h2>YOUR TURN</h2>
+<p>Take a moment to look at the <code>lineup</code> function documentation. Run the sample code to make a lineup, eg:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">lineup</span>(<span class="fu">null_permute</span>(<span class="st">'mpg'</span>), mtcars), <span class="fu">aes</span>(mpg, wt)) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> .sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>or your own.</p>
+<div class="f80">
+<p><br>And then the different null sample generating functions: <code>null_permute</code>, <code>null_lm</code>, <code>null_ts</code>, <code>null_dist</code>.</p>
+</div>
+</section>
+<section id="testing-for-best-plot-design" class="slide level2 center">
+<h2>Testing for best plot design</h2>
+</section>
+<section id="steps-1" class="slide level2">
+<h2>Steps</h2>
+<ol type="1">
+<li>Decide on plot descriptions, say two possibilities.</li>
+<li>Using the same data, and same null data create lineups that only differ because of the plot description.</li>
+<li>Show each lineup to two samples of uninvolved observers (one observer cannot see both lineups).</li>
+<li>Compute the proportion of each sample who identified the data plot, this is the <strong>signal strength</strong> or statistical power of each plot design.</li>
+<li>The plot with the greater value is the best design (for that problem).</li>
+</ol>
+</section>
+<section id="if-your-birthday-is-between-jan-1-and-jun-30-close-your-eyes-now" class="slide level2 center">
+<h2>If your birthday is between Jan 1 and Jun 30, CLOSE YOUR EYES NOW</h2>
+<p>No peeking!</p>
+</section>
+<section id="plot-design-example-1a" class="slide level2">
+<h2>Plot design example 1A</h2>
+<div class="columns">
+<div class="column" style="width:15%;">
+<p><br><br>Which plot is the most different?</p>
+</div><div class="column" style="width:85%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-36-1.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-design-example-1b" class="slide level2">
+<h2>Plot design example 1B</h2>
+<div class="columns">
+<div class="column" style="width:15%;">
+<p><br><br>Which plot is the most different?</p>
+</div><div class="column" style="width:85%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-37-1.png" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-design-example-1" class="slide level2">
+<h2>Plot design example 1</h2>
+<p>This is the pair of plot designs we are evaluating.</p>
+
+<img data-src="slides2_files/figure-revealjs/unnamed-chunk-38-1.png" style="width:60.0%" class="r-stretch quarto-figure-center"><p>Compute signal strength:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>?? <span class="sc">/</span> ??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="if-your-birthday-is-between-jul-1-and-dec-31-close-your-eyes-now" class="slide level2 center">
+<h2>If your birthday is between Jul 1 and Dec 31, CLOSE YOUR EYES NOW</h2>
+<p>No peeking!</p>
+</section>
+<section id="plot-design-example-2a" class="slide level2">
+<h2>Plot design example 2A</h2>
+<div class="columns">
+<div class="column" style="width:15%;">
+<p><br><br>Which plot is the most different?</p>
+</div><div class="column" style="width:85%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-40-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-design-example-2b" class="slide level2">
+<h2>Plot design example 2B</h2>
+<div class="columns">
+<div class="column" style="width:15%;">
+<p><br><br>Which plot is the most different?</p>
+</div><div class="column" style="width:85%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-41-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-design-example-1-1" class="slide level2">
+<h2>Plot design example 1</h2>
+<p>This is the pair of plot designs we are evaluating. Comparing the positions at which passes were made by both teams.</p>
+
+<img data-src="slides2_files/figure-revealjs/unnamed-chunk-42-1.png" style="width:60.0%" class="r-stretch quarto-figure-center"><p>Compute signal strength:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>?? <span class="sc">/</span> ??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="your-turn-2" class="slide level2">
+<h2>YOUR TURN</h2>
+<p>For the star temperature data, where we used this plot design</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stars, <span class="fu">aes</span>(<span class="at">x=</span>temp)) <span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>create a lineup with a different design, that you think might reveal the data distribution as different from null samples, better than the density plot. Possibilities could include <code>geom_histogram</code>, <code>ggbeeswarm::quasirandom</code>, <code>lvplot::geom_lv</code>.</p>
+</section>
+<section id="wrap-up" class="slide level2 center">
+<h2>Wrap up</h2>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<div class="f70">
+<ul>
+<li>Wickham, Cook, Hofmann, Buja (2010) Graphical Inference for Infovis, IEEE TVCG, https://doi.org/10.1109/TVCG.2010.161.</li>
+<li>Hofmann, Follett, Majumder, Cook (2012) Graphical Tests for Power Comparison of Competing Designs, IEEE TVCG, https://doi.org/10.1109/TVCG.2012.230.</li>
+<li>Buja, Cook, Hofmann, Lawrence, Lee EK, Swayne, Wickham (2009) Statistical inference for exploratory data analysis and model diagnostics, https://doi.org/10.1098/rsta.2009.0120.</li>
+<li>Majumder, Hofmann, Cook (2013) Validation of visual statistical inference, applied to linear models, https://doi.org/10.1080/01621459.2013.808157.</li>
+<li>VanderPlas, Rottger, Cook, Hofmann (2021) Statistical significance calculations for scenarios in visual inference, https://doi.org/10.1002/sta4.337.</li>
+</ul>
+</div>
+<div class="footer footer-default">
+
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="slides2_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="slides2_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/quarto-tone/tone.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="slides2_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoTone, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
