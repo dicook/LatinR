@@ -72,8 +72,8 @@ theme_set(ggthemes::theme_gdocs(base_size = 12) +
 plan <- tribble(~time, ~topic,
                 "3:30-3:50", "What is your plot testing?",
                 "3:50-4:10", "Creating null samples",
-                "4:10-4:30", "Conducting a lineup test", 
-                "4:30-5:00", "Testing for best plot design")
+                "4:10-4:40", "Conducting a lineup test", 
+                "4:40-5:00", "Testing for best plot design")
 knitr::kable(plan)
 ```
 
@@ -251,8 +251,9 @@ There a difference between the groups
 ## Statistical thinking
 
 - Because the <span style="color: #3B99B1;"> plot </span> is specified using a functional mapping of the variables, it <span style="color: #3B99B1;"> is a statistic</span>. 
-- Applying the function to a dataset provides the observed value.
 - The null and alternative hypotheses are indicated from the plot description.
+- Applying the function to a dataset provides the observed value.
+
 
 ## Null hypothesis, example 1
 
@@ -463,10 +464,11 @@ ggplot(DATA,
 ```
 
 <br>
-What is the null hypothesis?
+
+$H_o$: *There is no difference between the classes.* 
 
 ::: {.fragment}
-*There is no difference between the classes.* This is $H_o$.
+How would you generate null samples?
 :::
 
 
@@ -525,8 +527,13 @@ ggplot(FIT_ALL, aes(x=.FITTED,
 ```
 
 ::: {.fragment}
-*There is no relationship between residuals and fitted values.* This is $H_o$.
+$H_o$: *There is no relationship between residuals and fitted values.* 
 :::
+
+::: {.fragment}
+How would you generate null samples?
+:::
+
 ::: {.fragment}
 <br>
 Break any association by 
@@ -564,7 +571,7 @@ ggplot(lineup(null_lm(dist ~ speed, method="rotate"),
 
 ## Steps
 
-1. Create a lineup of $m-1$ null plots + 1 data plot, where data plot is randomly placed among nulls. Remove any distracting information, like tick labels, titles.
+1. Create a lineup of $m-1$ null plots + 1 data plot, where the data plot is randomly placed among nulls. Remove any distracting information, like tick labels, titles.
 2. Ask uninvolved observer(s) to pick the plot that is most different. (May need to use a crowd-sourcing service.)
 3. Compute the probability that the data plot was chosen, assuming it is no different from the null plots. This is the $p$-value.
 4. Decide to reject or fail to reject the null.
@@ -652,9 +659,354 @@ pvisual(1, 10, 15)
 
 This means we would NOT reject $H_o$ and conclude that there is NO difference in the distribution of groups. 
 
-## Lineup example 3
+## What is the $p$-value?
 
-## Lineup example 4
+```{r}
+#| label: coin
+head <- '<img src="images/heads.jpg" height = "70px" style="vertical-align:middle;">'
+tail <- '<img src="images/tails.jpg" height = "70px" style="vertical-align:middle;">'
+```
+
+
+- Suppose $X$ is the number of nandus out of $n$ independent tosses.
+- Let $p$ be the probability of getting a `r head` for this coin.
+- **Hypotheses**: $H_0: p = 0.5$ vs. $H_a: p > 0.5$. <br> Alternative $H_a$ is saying we believe that the coin is biased to nandus. <br> Alternative needs to be decided before seeing data. 
+- **Assumption**: Each toss is independent with equal chance of getting a nandu. 
+
+<!--
+**Test statistic**: $X \sim B(n, p)$. Recall $E(X\mid H_0) = np_0$.<br> We observe $n, x, \widehat{p}$. Test statistic is $\widehat{p} - p_0$.
+- **P-value**: $P(X ~ \geq ~ x\mid H_0)$ 
+- Conclusion**: Reject null hypothesis when the $p$-value is less than<br> some significance level $\alpha$. Usually $\alpha = 0.05$.
+-->
+
+## What is the $p$-value?
+
+- Suppose I have a coin that I'm going to flip `r tail` `r head` 
+- **Experiment 1**: I flipped the coin 10 times and this is the result:
+
+<center>
+```{r coin-bias, results='asis'}
+set.seed(924)
+samp10 <- sample(rep(c(head, tail), c(7, 3)))
+cat(paste0(samp10, collapse = ""))
+```
+</center>
+- The result is 7 nandus and 3 tails. So 70% are nandus. 
+- Do you believe the coin is biased based on this data?
+
+
+## What is the $p$-value?
+
+- **Experiment 2**: Suppose now I flip the coin 100 times and this is the outcome:
+
+```{r coin-bias100, results='asis'}
+samp100 <- sample(rep(c(head, tail), c(70, 30)))
+cat(paste0(samp100[1:42], collapse = ""))
+```
+- We observe 70 nandus and 30 tails. So again 70% are nandus. 
+- Based on this data, do you think the coin is biased?
+
+# Calculate the $p$-value
+
+:::: {.columns}
+
+::: {.column width=50% .f70}
+
+**Experiment 1 (n=10)**
+
+- We observed $x=7$, or $\widehat{p} = 0.7$.
+- Assuming $H_0$ is true, we expect $np=10\times 0.5=5$.
+- Calculate the $P(X \geq 7)$
+
+<br>
+<br>
+
+```{r echo=TRUE}
+sum(dbinom(7:10, 10, 0.5))
+```
+
+
+:::
+
+::: {.column width=50% .f70}
+
+**Experiment 2 (n=100)**
+
+- We observed $x=70$, or $\widehat{p} = 0.7$.
+- Assuming $H_0$ is true, we expect $np=100\times 0.5=50$.
+- Calculate the $P(X \geq 70)$
+
+<br>
+<br>
+
+```{r echo=TRUE}
+sum(dbinom(70:100, 100, 0.5))
+```
+
+:::
+
+::::
+
+## Lineup $p$-value and power
+
+Suppose $x$ out of $n$ people detected the data plot from a lineup, then
+the **visual inference p-value** is given as $P(X \geq x)$ where $X \sim B(n, 1/m)$, but
+
+::: {.fragment}
+the assumption of independence is not strictly satisfied, if people are shown the same lineup. So the $p$-value is computed by simulation with 
+
+```{r}
+#| eval: false
+#| echo: true
+nullabor::pvisual()
+```
+
+:::
+
+::: {.fragment}
+<br> and the **power of a lineup** is estimated as $x/n$. We'll use this to compare the signal strengths for different plot designs. *Stay tuned!*
+:::
+
+## Lineup example 3 <span style="font-size: 70%;"> (1/2) </span>
+
+:::: {.columns}
+
+::: {.column width=15%}
+<br><br>Which plot is the most different?
+:::
+
+::: {.column width=85%}
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5.5
+#| out-width: 90%
+library(dslabs)
+set.seed(357)
+ggplot(lineup(null_dist("temp", "exp", 
+                        list(rate = 1 / mean(dslabs::stars$temp))), 
+                        stars, n=15),
+       aes(x=temp)) +
+  geom_density(fill="black", alpha=0.7) +
+  facet_wrap(~.sample, ncol=5, scales="free") +
+  theme(axis.title = element_blank(),
+        axis.text = element_blank())
+```
+
+:::
+::::
+
+## Lineup example 3 <span style="font-size: 70%;"> (2/2) </span>
+
+:::: {.columns}
+
+::: {.column width=50%}
+
+Plot description was:
+
+```{r}
+#| eval: false
+#| echo: true
+ggplot(stars, aes(x=temp)) +
+  geom_density()
+```
+
+::: {.fragment}
+In particular, the researcher is interested to know if star temperature is a skewed distribution.
+:::
+
+::: {.fragment}
+
+$H_o: X\sim exp(\widehat{\lambda})$ <br>
+$H_a:$ it has a different distribution.
+:::
+
+:::
+
+::: {.column width=50% .fragment}
+
+::: {.fragment}
+Generate the lineup with:
+
+```{r}
+#| eval: false
+#| echo: true
+lineup(null_dist("temp", "exp", 
+  list(rate = 1 / 
+         mean(dslabs::stars$temp))), 
+  stars, n=15)
+```
+
+:::
+
+::: {.fragment}
+
+<br><br>Compute the $p$-value based on your responses to the lineup (previous slide).
+
+
+```{r}
+#| eval: false
+#| echo: true
+pvisual(n=??, k=??, m=15)
+```
+:::
+
+:::
+
+::::
+
+## Lineup example 4 <span style="font-size: 70%;"> (1/2) </span>
+
+:::: {.columns}
+
+::: {.column width=15%}
+<br><br>Which row of plots is the most different?
+:::
+
+::: {.column width=85%}
+
+```{r}
+tb <- read_csv(here::here("data/TB_notifications_2023-08-21.csv"))
+tb_ury <- tb %>%
+  filter(iso3 == "URY") %>%
+  filter(year > 1995)
+tb_ury_sa <- tb_ury %>%
+  filter(year > 2012) %>%
+  select(iso3, year, 
+         newrel_f014:newrel_f65, 
+         newrel_m014:newrel_m65) %>%
+  pivot_longer(cols=newrel_f014:newrel_m65,
+               names_to = "sex_age", 
+               values_to = "count") %>%
+  filter(!is.na(count)) %>%
+  separate(sex_age, into=c("stuff", 
+                           "sex_age")) %>%
+  mutate(sex = str_sub(sex_age, 1, 1),
+         age = str_sub(sex_age, 2, 
+                       str_length(sex_age))) %>%
+  mutate(age = case_when(
+    age == "014" ~ "0-14",
+    age == "1524" ~ "15-24",
+    age == "2534" ~ "25-34",
+    age == "3544" ~ "35-44",
+    age == "4554" ~ "45-54",
+    age == "5564" ~ "55-64",
+    age == "65" ~ "65")) %>%
+  select(iso3, year, sex, age, count)
+```
+
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5.5
+#| out-width: 90%
+l1 <- ggplot(tb_ury_sa, 
+       aes(x=year, 
+           y=count, 
+           fill=sex)) + 
+  geom_col(position="fill") +
+  facet_wrap(~age, ncol=7) +
+  scale_fill_discrete_divergingx(palette="ArmyRose") +
+  theme(legend.position="none",
+        axis.title = element_blank(),
+        axis.text = element_blank())
+set.seed(446)
+l2 <- tb_ury_sa %>% 
+  uncount(count) %>%
+  group_by(age) %>%
+  mutate(sex = sample(sex, replace = FALSE)) %>%
+  count(sex, age, year) %>%
+  ggplot(aes(x=year, 
+             y=n, 
+             fill=sex)) + 
+  geom_col(position="fill") +
+  facet_wrap(~age, ncol=7) +
+  scale_fill_discrete_divergingx(palette="ArmyRose") +
+  theme(legend.position="none",
+        axis.title = element_blank(),
+        axis.text = element_blank())
+l3 <- tb_ury_sa %>% 
+  uncount(count) %>%
+  group_by(age) %>%
+  mutate(sex = sample(sex, replace = FALSE)) %>%
+  count(sex, age, year) %>%
+  ggplot(aes(x=year, 
+             y=n, 
+             fill=sex)) + 
+  geom_col(position="fill") +
+  facet_wrap(~age, ncol=7) +
+  scale_fill_discrete_divergingx(palette="ArmyRose") +
+  theme(legend.position="none",
+        axis.title = element_blank(),
+        axis.text = element_blank())
+l1 + l2 + l3 + plot_layout(ncol=1)
+```
+
+:::
+::::
+
+## Lineup example 4 <span style="font-size: 70%;"> (2/2) </span>
+
+:::: {.columns}
+
+::: {.column width=50%}
+
+Plot description was:
+
+
+```{r}
+#| eval: false
+#| echo: true
+ggplot(tb_ury_sa, 
+       aes(x=year, 
+           y=count, 
+           fill=sex)) + 
+  geom_col(position="fill") +
+  facet_wrap(~age, ncol=7)
+```
+
+::: {.fragment}
+
+$H_o:$ Proportion of males and females is the same for each year, conditional on age group <br>
+$H_a:$ it's not
+:::
+
+:::
+
+::: {.column width=50% .fragment}
+
+::: {.fragment}
+Generate the lineup with:
+
+```{r}
+#| eval: false
+#| echo: true
+b_ury_sa %>% 
+  uncount(count) %>%
+  group_by(age) %>%
+  mutate(sex = sample(sex, 
+    replace = FALSE)) %>%
+  count(sex, age, year)
+```
+
+:::
+
+::: {.fragment}
+
+<br><br>Compute the $p$-value based on your responses to the lineup (previous slide).
+
+
+```{r}
+#| eval: false
+#| echo: true
+pvisual(n=??, k=??, m=3)
+```
+:::
+
+:::
+
+::::
+
 
 ## Practical considerations
 
@@ -663,7 +1015,286 @@ This means we would NOT reject $H_o$ and conclude that there is NO difference in
     - Create multiple lineups for a data plot, different positions, different nulls
     - Show each to different groups of observers
     - Compute $p$-value by combining results from each lineup.
+- Crowd-sourcing services include: [Amazon Mechanical Turk](https://www.mturk.com/), [prolific](https://www.prolific.co/), 
+[Appen](https://appen.com), [LABVANCED](https://www.labvanced.com/).
 
 ## YOUR TURN
 
+Take a moment to look at the `lineup` function documentation. Run the sample code to make a lineup, eg:
+
+```{r}
+#| eval: false
+#| echo: true
+ggplot(lineup(null_permute('mpg'), mtcars), aes(mpg, wt)) +
+  geom_point() +
+  facet_wrap(~ .sample)
+```
+
+or your own.
+
+::: {.f80}
+<br>And then the different null sample generating functions: `null_permute`, `null_lm`,  `null_ts`, `null_dist`. 
+:::
+
 ## Testing for best plot design {.center}
+
+## Steps
+
+1. Decide on plot descriptions, say two possibilities.
+2. Using the same data, and same null data create lineups that only differ because of the plot description.
+3. Show each lineup to two samples of uninvolved observers (one observer cannot see both lineups).
+4. Compute the proportion of each sample who identified the data plot, this is the **signal strength** or statistical power of each plot design.
+5. The plot with the greater value is the best design (for that problem).
+
+## If your birthday is between Jan 1 and Jun 30, CLOSE YOUR EYES NOW {.center}
+
+No peeking!
+
+## Plot design example 1A
+
+:::: {.columns}
+
+::: {.column width=15%}
+<br><br>Which plot is the most different?
+:::
+
+::: {.column width=85%}
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+#| out-width: 80%
+set.seed(601)
+ggplot(lineup(null_permute("year"), tb_ury, n=15), 
+       aes(x=year, y=c_newinc)) + 
+  geom_point() +
+  geom_smooth(se=F, colour="#F5191C") +
+  facet_wrap(~.sample, ncol=5) +
+  theme(axis.title = element_blank(),
+        axis.text = element_blank())
+```
+:::
+
+::::
+
+## Plot design example 1B
+
+:::: {.columns}
+
+::: {.column width=15%}
+<br><br>Which plot is the most different?
+:::
+
+::: {.column width=85%}
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+#| out-width: 90%
+set.seed(601)
+ggplot(lineup(null_permute("year"), tb_ury, n=15), 
+       aes(x=year, y=c_newinc)) + 
+  geom_col(fill="#F5191C") +
+  facet_wrap(~.sample, ncol=5) +
+  theme(axis.title = element_blank(),
+        axis.text = element_blank())
+```
+:::
+
+::::
+
+## Plot design example 1
+
+This is the pair of plot designs we are evaluating.
+
+```{r}
+#| message: false
+#| warning: false
+#| fig-width: 6
+#| fig-align: center
+#| out-width: 60%
+tb_ury <- tb %>%
+  filter(iso3 == "URY") %>%
+  filter(year > 1995)
+p1 <- ggplot(tb_ury, aes(x=year, y=c_newinc)) + 
+  geom_point() +
+  geom_smooth(se=F, colour="#F5191C") +
+  scale_x_continuous("Year", breaks = seq(1980, 2020, 10), labels = c("80", "90", "00", "10", "20")) +
+  ylab("TB incidence") +
+  ggtitle("Plot A")
+
+p2 <- ggplot(tb_ury, aes(x=year, y=c_newinc)) + 
+  geom_col(fill="#F5191C") +
+  scale_x_continuous("Year", breaks = seq(1980, 2020, 10), labels = c("80", "90", "00", "10", "20")) +
+  ylab("TB incidence") +
+  ggtitle("Plot B")
+
+p1 + p2
+```
+
+Compute signal strength:
+
+```{r}
+#| eval: false
+#| echo: true
+?? / ??
+```
+
+## If your birthday is between Jul 1 and Dec 31, CLOSE YOUR EYES NOW {.center}
+
+No peeking!
+
+## Plot design example 2A
+
+:::: {.columns}
+
+::: {.column width=15%}
+<br><br>Which plot is the most different?
+:::
+
+::: {.column width=85%}
+
+```{r}
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+library(StatsBombR)
+library(SBpitch)
+load("data/aus_brazil.rda")
+passes = aus_brazil %>%
+  filter(type.name=="Pass" & is.na(pass.outcome.name))
+#create_Pitch() +  
+set.seed(622)
+ggplot(data=lineup(null_permute("possession_team.name"),
+                         passes, n=12), 
+             aes(x=location.x, 
+                 y=location.y,
+                 colour=possession_team.name))  +
+  geom_point(alpha=0.7) +
+  scale_color_discrete_divergingx(palette="Temps", nmax=2, rev=TRUE) + 
+  facet_wrap(~.sample, ncol=4) +
+  coord_equal() +
+  theme(legend.position = "none",
+        axis.title = element_blank(),
+        axis.text = element_blank())
+```
+
+:::
+
+::::
+
+## Plot design example 2B
+
+:::: {.columns}
+
+::: {.column width=15%}
+<br><br>Which plot is the most different?
+:::
+
+::: {.column width=85%}
+
+```{r}
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+library(StatsBombR)
+library(SBpitch)
+load("data/aus_brazil.rda")
+passes = aus_brazil %>%
+  filter(type.name=="Pass" & is.na(pass.outcome.name))
+#create_Pitch() +  
+set.seed(622)
+ggplot(data=lineup(null_permute("possession_team.name"),
+                         passes, n=12), 
+             aes(x=location.x, 
+                 y=location.y,
+                 colour=possession_team.name))  +
+  geom_density2d(alpha=0.7) +
+  scale_color_discrete_divergingx(palette="Temps", nmax=2, rev=TRUE) + 
+  facet_wrap(~.sample, ncol=4) +
+  coord_equal() +
+  theme(legend.position = "none",
+        axis.title = element_blank(),
+        axis.text = element_blank())
+```
+
+:::
+
+::::
+
+## Plot design example 1
+
+This is the pair of plot designs we are evaluating. Comparing the positions at which passes were made by both teams.
+
+```{r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 3
+#| fig-align: center
+#| out-width: 60%
+p1 <- create_Pitch() + 
+  geom_point(data=passes, 
+             aes(x=location.x, 
+                 y=location.y,
+                 colour=possession_team.name)) +
+  scale_color_discrete_divergingx(palette="Temps", nmax=2, rev=TRUE) + 
+  coord_equal() +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom",
+        legend.direction = "horizontal",
+        legend.text = element_text(size="8"),
+        axis.line.x = element_blank(),
+        axis.line.y = element_blank()) +
+  ggtitle("Plot A")
+p2 <- create_Pitch() + 
+  geom_density2d(data=passes, 
+             aes(x=location.x, 
+                 y=location.y,
+                 colour=possession_team.name)) +
+  scale_color_discrete_divergingx(palette="Temps", nmax=2, rev=TRUE) + 
+  coord_equal() +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom",
+        legend.direction = "horizontal",
+        legend.text = element_text(size="8"),
+        axis.line.x = element_blank(),
+        axis.line.y = element_blank()) +
+  ggtitle("Plot B")
+
+p1 + p2
+```
+
+Compute signal strength:
+
+```{r}
+#| eval: false
+#| echo: true
+?? / ??
+```
+
+## YOUR TURN
+
+For the star temperature data, where we used this plot design
+
+```{r}
+#| eval: false
+#| echo: true
+ggplot(stars, aes(x=temp)) +
+  geom_density()
+```
+
+create a lineup with a different design, that you think might reveal the data distribution as different from null samples, better than the density plot. Possibilities could include `geom_histogram`, `ggbeeswarm::quasirandom`, `lvplot::geom_lv`.
+
+## Wrap up {.center}
+
+## References
+
+::: {.f70}
+- Wickham, Cook, Hofmann, Buja (2010) Graphical Inference for Infovis, IEEE TVCG, https://doi.org/10.1109/TVCG.2010.161.
+- Hofmann, Follett, Majumder, Cook (2012) Graphical Tests for Power Comparison of Competing Designs, IEEE TVCG, https://doi.org/10.1109/TVCG.2012.230.
+- Buja, Cook, Hofmann, Lawrence, Lee EK, Swayne, Wickham (2009) Statistical inference for exploratory data analysis and model diagnostics, https://doi.org/10.1098/rsta.2009.0120.
+- Majumder, Hofmann, Cook (2013) Validation of visual statistical inference, applied to linear models, https://doi.org/10.1080/01621459.2013.808157.
+- VanderPlas, Rottger, Cook, Hofmann (2021) Statistical significance calculations for scenarios in visual inference, https://doi.org/10.1002/sta4.337.
+:::
+
