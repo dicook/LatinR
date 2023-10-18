@@ -7,7 +7,6 @@ format:
       - default
       - custom.scss
     slide-number: c/t
-    slide-tone: true
     chalkboard: true
 code-line-numbers: false
 message: false
@@ -305,7 +304,7 @@ install.packages("nullabor")
 
 1. **Each variable forms a column**
 2. **Each observation forms a row**
-3. **Each type of observational unit forms a table.** If you have data on multiple levels (e.g., data about houses and data about the rooms within those houses), these should be in separate tables.
+3. **Each type of observational unit forms a table.** If you have data on multiple levels (e.g. data about houses and data about the rooms within those houses), these should be in separate tables.
 
 ::: {style="font-size: 40%;"}
 

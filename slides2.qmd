@@ -7,7 +7,6 @@ format:
       - default
       - custom.scss
     slide-number: c/t
-    slide-tone: true
     chalkboard: true
 code-line-numbers: false
 message: false
