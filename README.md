@@ -21,15 +21,15 @@ Background: Participants should have a good working knowledge of R, and tidy ver
 
 | time | topic |
 |------|-------|
-|1:30-1:45|	Why, philosophy and benefits|
-|1:45-2:05|	Organising data to map variables to plots|
-|2:05-2:35|	Making a variety of plots|
-|2:35-3:00|	Do but don’t, and cognitive principles|
-|3:00-3:30|	COFFEE BREAK|
-|3:30-3:50|	What is your plot testing?|
-|3:50-4:10|	Creating null samples|
-|4:10-4:40|	Conducting a lineup test|
-|4:40-5:00|	Testing for best plot design|
+|1:40-1:55|	Why, philosophy and benefits|
+|1:55-2:15|	Organising data to map variables to plots|
+|2:15-2:45|	Making a variety of plots|
+|2:45-3:10|	Do but don’t, and cognitive principles|
+|3:10-3:40|	COFFEE BREAK|
+|3:40-4:00|	What is your plot testing?|
+|4:00-4:15|	Creating null samples|
+|4:15-4:45|	Conducting a lineup test|
+|4:45-5:00|	Testing for best plot design|
 
 [Session 1 Slides](https://dicook.github.io/LatinR/slides1.html)
 
