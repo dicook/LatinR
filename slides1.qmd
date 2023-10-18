@@ -221,7 +221,7 @@ p1 + p2
 Reading data plots is <span style="color: #F5191C;">subjective</span>. 
 
 ::: {.fragment} 
-<br> Making decision based on data visualisations is common, where <span style="color: #3B99B1;"> we need to be  objective </span>. 
+<br> Making decisions based on data visualisations is common, where <span style="color: #3B99B1;"> we need to be  objective </span>. 
 :::
 
 ::: {.fragment style="margin-left:230px"} 
