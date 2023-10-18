@@ -20,21 +20,21 @@ knitr::opts_chunk$set(
   cache = FALSE
 )
 theme_set(ggthemes::theme_gdocs(base_size = 12) +
-  theme(plot.background = 
+  theme(plot.background =
         element_rect(fill = 'transparent', colour = NA),
-        axis.line.x = element_line(color = "black", 
+        axis.line.x = element_line(color = "black",
                                    linetype = "solid"),
-        axis.line.y = element_line(color = "black", 
+        axis.line.y = element_line(color = "black",
                                    linetype = "solid"),
         plot.title.position = "plot",
         plot.title = element_text(size = 18),
-        panel.background  = 
+        panel.background  =
           element_rect(fill = 'transparent', colour = "black"),
-        legend.background = 
+        legend.background =
           element_rect(fill = 'transparent', colour = NA),
-        legend.key        = 
+        legend.key        =
           element_rect(fill = 'transparent', colour = NA)
-  ) 
+  )
 )
 
 
@@ -49,9 +49,9 @@ theme_set(ggthemes::theme_gdocs(base_size = 12) +
 
 plan <- tribble(~time, ~topic,
                 "1:30-1:45", "Why, philosophy and benefits",
-                "1:45-2:05", "Organising data to map variables to plots", 
+                "1:45-2:05", "Organising data to map variables to plots",
                 "2:05-2:35", "Making a variety of plots",
-                "2:35-3:00", "Do but don't, and cognitive principles", 
+                "2:35-3:00", "Do but don't, and cognitive principles",
                 "3:00-3:30", "COFFEE BREAK")
 knitr::kable(plan)
 
@@ -70,19 +70,19 @@ load("data/aus_brazil.rda")
 shots = aus_brazil %>%
   filter(type.name=="Shot" & is.na(pass.outcome.name))
 create_Pitch(grass_colour = "#FFFFFF",
-             background_colour =  "#FFFFFF") +   
+             background_colour =  "#FFFFFF") +
   geom_point(data=shots, aes(x=location.x, y=location.y,
                    colour=possession_team.name))  +
-  scale_color_discrete_divergingx(palette="Zissou 1") + 
+  scale_color_discrete_divergingx(palette="Zissou 1") +
   coord_equal() +
-  theme(legend.title = element_blank(), 
+  theme(legend.title = element_blank(),
         legend.position = "bottom",
         legend.direction = "horizontal",
-        legend.background = 
+        legend.background =
           element_rect(fill = 'transparent', colour = NA),
         axis.line.x = element_blank(),
         axis.line.y = element_blank(),
-        legend.key = 
+        legend.key =
           element_rect(fill = 'transparent', colour = NA))
 
 
@@ -95,12 +95,12 @@ tb <- read_csv(here::here("data/TB_notifications_2023-08-21.csv"))
 tb_sub <- tb %>%
   filter(iso3 %in% c("AUS", "URY")) %>%
   filter(year > 1995)
-ggplot(tb_sub, aes(x=year, y=c_newinc, colour=iso3)) + 
+ggplot(tb_sub, aes(x=year, y=c_newinc, colour=iso3)) +
   geom_point() +
   geom_smooth(se=F) +
   scale_x_continuous("Year", breaks = seq(1980, 2020, 10), labels = c("80", "90", "00", "10", "20")) +
   ylab("TB incidence") +
-  scale_colour_discrete_divergingx(palette="Zissou 1") + 
+  scale_colour_discrete_divergingx(palette="Zissou 1") +
   facet_wrap(~iso3, ncol=2, scales="free_y") +
   theme(legend.position = "none")
 
@@ -114,14 +114,14 @@ ggplot(tb_sub, aes(x=year, y=c_newinc, colour=iso3)) +
 tb_ury <- tb %>%
   filter(iso3 == "URY") %>%
   filter(year > 1995)
-p1 <- ggplot(tb_ury, aes(x=year, y=c_newinc)) + 
+p1 <- ggplot(tb_ury, aes(x=year, y=c_newinc)) +
   geom_point() +
   geom_smooth(se=F, colour="#F5191C") +
   scale_x_continuous("Year", breaks = seq(1980, 2020, 10), labels = c("80", "90", "00", "10", "20")) +
   ylab("TB incidence") +
   ggtitle("Plot A")
 
-p2 <- ggplot(tb_ury, aes(x=year, y=c_newinc)) + 
+p2 <- ggplot(tb_ury, aes(x=year, y=c_newinc)) +
   geom_col(fill="#F5191C") +
   scale_x_continuous("Year", breaks = seq(1980, 2020, 10), labels = c("80", "90", "00", "10", "20")) +
   ylab("TB incidence") +
@@ -152,7 +152,7 @@ p1 + p2
 tb_ury %>%
   select(iso3, year, newrel_m014:newrel_m65, newrel_f014:newrel_f65) %>%
   filter(year > 2012) %>%
-  slice_head(n=11) %>% 
+  slice_head(n=11) %>%
   datatable(options = list(dom = 't'))
 
 
@@ -178,12 +178,12 @@ grad %>% slice_head(n=7) %>% datatable(options = list(dom = 't'))
 ## save(montevideo, file="data/montevideo.rda")
 ## montevideo2 <- ghcnd("UYM00086560") # LAGUNA DE LOS PATOS INTL
 ## save(montevideo2, file="data/montevideo2.rda")
-## 
+##
 
 
 #| message: false
 #| warning: false
-load("data/montevideo2.rda") 
+load("data/montevideo2.rda")
 datatable(montevideo2[2100:2110,c(1,2,3,4,seq(5,128,4))], options = list(dom = 't'))
 
 
@@ -199,14 +199,14 @@ datatable(montevideo2[2100:2110,c(1,2,3,4,seq(5,128,4))], options = list(dom = '
 
 #| label: ury-tb
 #| fig-height: 2.5
-ggplot(tb_ury, 
-       aes(x=year, 
-           y=c_newinc)) + 
+ggplot(tb_ury,
+       aes(x=year,
+           y=c_newinc)) +
   geom_point() +
-  scale_x_continuous("Year", 
-    breaks = seq(1980, 2020, 10), 
+  scale_x_continuous("Year",
+    breaks = seq(1980, 2020, 10),
     labels = c("80", "90", "00", "10", "20")) +
-  ylab("TB incidence") 
+  ylab("TB incidence")
 
 
 #| label: ury-tb
@@ -227,11 +227,11 @@ ggplot(tb_ury,
 
 #| label: ury-tb-bar
 #| fig-height: 2.5
-ggplot(tb_ury, aes(x=year, y=c_newinc)) + 
+ggplot(tb_ury, aes(x=year, y=c_newinc)) +
   geom_point() +
   geom_smooth(se=F, colour="#F5191C") +
   scale_x_continuous("Year", breaks = seq(1980, 2020, 10), labels = c("80", "90", "00", "10", "20")) +
-  ylab("TB incidence") 
+  ylab("TB incidence")
 
 
 #| label: ury-tb-bar
@@ -250,13 +250,13 @@ ggplot(tb_ury, aes(x=year, y=c_newinc)) +
 #| label: penguins1
 #| fig-height: 3.5
 #| out-width: 80%
-ggplot(penguins, 
-       aes(x=flipper_length_mm, 
-           y=bill_length_mm, 
-           color=species)) + 
+ggplot(penguins,
+       aes(x=flipper_length_mm,
+           y=bill_length_mm,
+           color=species)) +
   geom_point(alpha=0.8) +
   scale_color_discrete_divergingx(palette="Zissou 1") +
-  theme(legend.title = element_blank(), 
+  theme(legend.title = element_blank(),
         legend.position = "bottom",
         legend.direction = "horizontal",
         legend.text = element_text(size="8"))
@@ -282,13 +282,13 @@ ggplot(penguins,
 #| label: penguins2
 #| fig-height: 3.5
 #| out-width: 80%
-ggplot(penguins, 
-       aes(x=flipper_length_mm, 
-           y=bill_length_mm, 
-           color=species)) + 
+ggplot(penguins,
+       aes(x=flipper_length_mm,
+           y=bill_length_mm,
+           color=species)) +
   geom_density2d(alpha=0.8) +
   scale_color_discrete_divergingx(palette="Zissou 1") +
-  theme(legend.title = element_blank(), 
+  theme(legend.title = element_blank(),
         legend.position = "bottom",
         legend.direction = "horizontal",
         legend.text = element_text(size="8"))
@@ -315,17 +315,17 @@ ggplot(penguins,
 #| echo: true
 tb_ury_sa <- tb_ury %>%
   filter(year > 2012) %>%
-  select(iso3, year, 
-         newrel_f014:newrel_f65, 
+  select(iso3, year,
+         newrel_f014:newrel_f65,
          newrel_m014:newrel_m65) %>%
   pivot_longer(cols=newrel_f014:newrel_m65,
-               names_to = "sex_age", 
+               names_to = "sex_age",
                values_to = "count") %>%
   filter(!is.na(count)) %>%
-  separate(sex_age, into=c("stuff", 
+  separate(sex_age, into=c("stuff",
                            "sex_age")) %>%
   mutate(sex = str_sub(sex_age, 1, 1),
-         age = str_sub(sex_age, 2, 
+         age = str_sub(sex_age, 2,
                        str_length(sex_age))) %>%
   mutate(age = case_when(
     age == "014" ~ "0-14",
@@ -349,18 +349,18 @@ tb_ury_sa %>% datatable(options = list(dom = 't'))
 #| fig-height: 2.5
 #| fig-width: 10
 #| out-width: 100%
-ggplot(tb_ury_sa, 
-       aes(x=year, 
-           y=count, 
-           fill=sex)) + 
+ggplot(tb_ury_sa,
+       aes(x=year,
+           y=count,
+           fill=sex)) +
   geom_col(position="fill") +
   facet_wrap(~age, ncol=7) +
   ylab("") +
   scale_fill_discrete_divergingx(palette="ArmyRose") +
-  scale_x_continuous("year", 
-    breaks = seq(2013, 2021, 2), 
+  scale_x_continuous("year",
+    breaks = seq(2013, 2021, 2),
     labels = c("13", "15", "17", "19", "21")) +
-  theme(legend.position = "bottom", 
+  theme(legend.position = "bottom",
         legend.direction = "horizontal",
         legend.title = element_blank(),
         axis.text = element_text(size="10"))
@@ -369,16 +369,16 @@ ggplot(tb_ury_sa,
 #| fig-height: 4
 #| fig-width: 10
 #| out-width: 80%
-ggplot(tb_ury_sa, 
-       aes(x=year, 
-           y=count, 
-           fill=sex)) + 
+ggplot(tb_ury_sa,
+       aes(x=year,
+           y=count,
+           fill=sex)) +
   geom_col() +
   facet_grid(sex~age, scales = "free_y") +
   ylab("count") +
   scale_fill_discrete_divergingx(palette="ArmyRose") +
-  scale_x_continuous("year", 
-    breaks = seq(2013, 2021, 2), 
+  scale_x_continuous("year",
+    breaks = seq(2013, 2021, 2),
     labels = c("13", "15", "17", "19", "21")) +
   theme(legend.position = "none",
         axis.text = element_text(size="10"))
@@ -387,19 +387,19 @@ ggplot(tb_ury_sa,
 #| fig-height: 4
 #| fig-width: 10
 #| out-width: 80%
-ggplot(tb_ury_sa, 
-       aes(x=year, 
-           y=count, 
-           colour=sex)) + 
+ggplot(tb_ury_sa,
+       aes(x=year,
+           y=count,
+           colour=sex)) +
   geom_point() +
   geom_smooth(se=F, alpha=0.7) +
   facet_grid(sex~age, scales = "free_y") +
   ylab("count") +
   scale_colour_discrete_divergingx(palette="ArmyRose") +
-  scale_x_continuous("year", 
-    breaks = seq(2013, 2021, 2), 
+  scale_x_continuous("year",
+    breaks = seq(2013, 2021, 2),
     labels = c("13", "15", "17", "19", "21")) +
-  theme(legend.position = "bottom", 
+  theme(legend.position = "bottom",
         legend.direction = "horizontal",
         legend.title = element_blank(),
         axis.text = element_text(size="10"))
@@ -453,10 +453,10 @@ ggplot(tb_ury_sa,
 #| fig-height: 6
 #| fig-width: 10
 #| out-width: 100%
-ggplot(tb_ury_sa, 
-       aes(x=age, 
-           y=count, 
-           fill=sex)) + 
+ggplot(tb_ury_sa,
+       aes(x=age,
+           y=count,
+           fill=sex)) +
   geom_col(position="fill") +
   facet_wrap(~year, ncol=3) +
   ylab("proportion") +
@@ -508,16 +508,16 @@ vis_spacing1 <- 'style="padding-left:10px;"'
 
 #| fig-width: 7
 #| fig-height: 5
-ggplot(tb_ury_sa, 
-       aes(x=year, 
-           y=count, 
-           colour=sex)) + 
+ggplot(tb_ury_sa,
+       aes(x=year,
+           y=count,
+           colour=sex)) +
   geom_point() +
   geom_smooth(se=F) +
   facet_wrap(~age, ncol = 4) +
   scale_color_discrete_divergingx(palette="Zissou 1") +
-  scale_x_continuous("year", 
-    breaks = seq(2013, 2021, 2), 
+  scale_x_continuous("year",
+    breaks = seq(2013, 2021, 2),
     labels = c("13", "15", "17", "19", "21")) +
   theme(axis.text = element_text(size="10")) +
   ggtitle("Arrangement A")
@@ -525,13 +525,13 @@ ggplot(tb_ury_sa,
 
 #| fig-width: 7
 #| fig-height: 5
-ggplot(tb_ury_sa, 
+ggplot(tb_ury_sa,
        aes(x = year, y = count, colour = age)) +
   geom_line() + geom_point() +
   facet_wrap(~sex, ncol = 2) +
   scale_color_discrete_divergingx(palette="Zissou 1") +
-  scale_x_continuous("year", 
-    breaks = seq(2013, 2021, 2), 
+  scale_x_continuous("year",
+    breaks = seq(2013, 2021, 2),
     labels = c("13", "15", "17", "19", "21")) +
   theme(axis.text = element_text(size="10")) +
   ggtitle("Arrangement B")
@@ -542,18 +542,18 @@ ggplot(tb_ury_sa,
 tb_ury_sa %>%
   filter(age %in% c("35-44", "45-54"),
          sex == "m") %>%
-  ggplot(mapping=aes(x=year, 
-                 y=count)) + 
+  ggplot(mapping=aes(x=year,
+                 y=count)) +
   geom_point() +
   geom_smooth(aes(colour=age), se=F, method="lm") +
   facet_wrap(~age, ncol = 2) +
   scale_color_discrete_divergingx(palette="Zissou 1") +
-  scale_x_continuous("year", 
-    breaks = seq(2013, 2021, 2), 
+  scale_x_continuous("year",
+    breaks = seq(2013, 2021, 2),
     labels = c("13", "15", "17", "19", "21")) +
   theme(legend.position="none",
         axis.text = element_text(size="10"))
-  
+
 
 
 #| fig-width: 3
@@ -562,23 +562,35 @@ tb_ury_sa %>%
 tb_ury_sa %>%
   filter(age %in% c("35-44", "45-54"),
          sex == "m") %>%
-  ggplot(mapping=aes(x=year, 
-                 y=count)) + 
+  ggplot(mapping=aes(x=year,
+                 y=count)) +
   geom_smooth(aes(colour=age), se=F, method="lm") +
   scale_color_discrete_divergingx(palette="Zissou 1") +
-  scale_x_continuous("year", 
-    breaks = seq(2013, 2021, 2), 
+  scale_x_continuous("year",
+    breaks = seq(2013, 2021, 2),
     labels = c("13", "15", "17", "19", "21")) +
   theme(legend.position="none",
         axis.text = element_text(size="10"))
-  
+
 
 
 #| echo: true
 library(nullabor)
 data(electoral)
-ggplot(electoral$polls, 
-       aes(x=Democrat, 
+ggplot(electoral$polls,
+       aes(x=Democrat,
            y=Margin)) +
   geom_boxplot()
 
+#| echo: false
+#| eval: false
+ggplot(electoral$polls,
+       aes(x=1,
+           y=Margin,
+           colour=Democrat)) +
+  geom_point()
+
+ggplot(electoral$polls,
+       aes(x=Margin,
+           fill=Democrat)) +
+  geom_histogram()

@@ -1236,4 +1236,22 @@ ggplot(electoral$polls,
   geom_boxplot()
 ```
 
+```{r}
+#| echo: false
+#| eval: false
+ggplot(electoral$polls,
+       aes(x=1,
+           y=Margin,
+           colour=Democrat)) +
+  geom_point()
+
+ggplot(electoral$polls,
+       aes(x=Margin,
+           fill=Democrat)) +
+  geom_histogram()
+```
+
 ## End of session 1 {.center}
+
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+ 
